@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enrollment Request Form - Laurel Ridge Community College</title>
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; max-width: 800px; margin: 20px auto; padding: 0 20px; color: #222; }
+        header { border-bottom: 2px solid #000; margin-bottom: 20px; }
+        fieldset { border: 1px solid #ccc; margin-bottom: 20px; padding: 15px; }
+        legend { font-weight: bold; font-size: 1.2rem; padding: 0 10px; }
+        .form-group { margin-bottom: 15px; display: flex; flex-wrap: wrap; gap: 10px; }
+        label { font-weight: bold; display: block; width: 100%; }
+        input[type="text"], input[type="date"], input[type="tel"], select { padding: 8px; width: 100%; max-width: 300px; border: 1px solid #767676; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        th { background-color: #f4f4f4; }
+        .consent-box { background: #f9f9f9; padding: 15px; border-left: 5px solid #005a9c; }
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Laurel Ridge Community College [cite: 1]</h1>
+    <p><strong>Admissions / Enrollment Services Office [cite: 2]</strong></p>
+    <p>173 Skirmisher Ln, Middletown, VA 22645 | 540-868-7110 [cite: 3]</p>
+</header>
+
+<form action="#" method="post">
+    
+    <fieldset>
+        <legend>Student Information</legend>
+        <div class="form-group">
+            <label for="semester">Semester [cite: 5]</label>
+            <select id="semester" name="semester" required>
+                <option value="">Select a Semester</option>
+                <option value="fall">Fall</option>
+                <option value="spring">Spring</option>
+                <option value="summer">Summer</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="year">Year [cite: 5]</label>
+            <input type="text" id="year" name="year" placeholder="YYYY" required>
+        </div>
+        <div class="form-group">
+            <label for="student_id">Student ID# [cite: 7]</label>
+            <input type="text" id="student_id" name="student_id" required>
+        </div>
+        <div class="form-group">
+            <label for="name_last">Last Name [cite: 11]</label>
+            <input type="text" id="name_last" name="name_last" required>
+        </div>
+        <div class="form-group">
+            <label for="name_first">First Name [cite: 12]</label>
+            <input type="text" id="name_first" name="name_first" required>
+        </div>
+        <div class="form-group">
+            <label for="dob">Date of Birth [cite: 9]</label>
+            <input type="date" id="dob" name="dob" required>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>ADD Courses [cite: 14]</legend>
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Class # </th>
+                    <th scope="col">Subject </th>
+                    <th scope="col">Course # </th>
+                    <th scope="col">Credits </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="text" name="add_class_1" aria-label="Add Class Number 1"></td>
+                    <td><input type="text" name="add_subj_1" aria-label="Add Subject 1"></td>
+                    <td><input type="text" name="add_course_1" aria-label="Add Course Number 1"></td>
+                    <td><input type="text" name="add_cred_1" aria-label="Add Credits 1"></td>
+                </tr>
+            </tbody>
+        </table>
+    </fieldset>
+
+    <div class="consent-box">
+        <p>[cite: 20] I voluntarily consent to the use of an electronic record of my Laurel Ridge student file.</p>
+        <p>[cite: 21] I acknowledge that logging into the MyLaurelRidge system and emailing from my @email.vccs.edu account serves as my electronic signature.</p>
+        <div class="form-group">
+            <label for="signature">Student's Electronic Signature [cite: 18]</label>
+            <input type="text" id="signature" name="signature" required>
+        </div>
+    </div>
+
+    <div style="margin-top: 20px;">
+        <button type="submit" style="padding: 10px 20px; background: #005a9c; color: #fff; border: none; cursor: pointer;">Submit Request</button>
+    </div>
+
+</form>
+
+</body>
+</html>
