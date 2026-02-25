@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Authenticity Lab — Resources | LearnAIID LLC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=Outfit:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0a0e1a;
+  --ink-mid: #111829;
+  --ink-surface: #161d30;
+  --ember: #ff6b35;
+  --ember-glow: #ff8c5a;
+  --cyan: #00d4aa;
+  --cyan-dim: rgba(0,212,170,0.1);
+  --slate: #8892a8;
+  --cloud: #c8d0e0;
+  --white: #f0f2f8;
+  --glass: rgba(255,255,255,0.04);
+  --glass-border: rgba(255,255,255,0.08);
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'Outfit', system-ui, sans-serif;
+  --font-mono: 'Fira Code', monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--ink);
+  color: var(--white);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --- BG --- */
+.bg-ambient {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 60% 50% at 15% 85%, rgba(255,107,53,0.07) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 40% at 85% 15%, rgba(0,212,170,0.07) 0%, transparent 70%);
+}
+
+/* --- LAYOUT --- */
+.page { position: relative; z-index: 1; }
+
+.container {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* --- HERO --- */
+.hero {
+  padding: 4rem 0 3rem;
+  text-align: center;
+  position: relative;
+}
+.hero-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ember);
+  margin-bottom: 1rem;
+  display: block;
+  animation: fadeIn 0.8s ease;
+}
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 0.75rem;
+  animation: fadeSlideUp 0.8s ease;
+}
+.hero h1 .gradient-text {
+  background: linear-gradient(135deg, var(--white) 20%, var(--cyan) 80%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero .subtitle {
+  font-size: 1.1rem;
+  color: var(--cloud);
+  font-weight: 300;
+  max-width: 560px;
+  margin: 0 auto;
+  line-height: 1.6;
+  animation: fadeSlideUp 0.8s ease 0.15s both;
+}
+.hero-divider {
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--ember), var(--cyan));
+  margin: 2rem auto 0;
+  border-radius: 3px;
+  animation: fadeIn 0.8s ease 0.3s both;
+}
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- RESOURCE CARDS --- */
+.resources-section {
+  padding: 3rem 0;
+}
+.resources-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+@media (min-width: 700px) {
+  .resources-grid { grid-template-columns: 1fr 1fr 1fr; }
+}
+
+.resource-card {
+  background: var(--ink-surface);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 1.75rem 1.5rem;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.resource-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--ember), var(--cyan));
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.resource-card:hover {
+  border-color: rgba(255,255,255,0.15);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+}
+.resource-card:hover::before { opacity: 1; }
+
+.resource-number {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--ink-mid);
+  -webkit-text-stroke: 1px rgba(255,255,255,0.08);
+  position: absolute;
+  top: 0.75rem;
+  right: 1rem;
+  line-height: 1;
+}
+.resource-icon {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+}
+.resource-icon.teal { background: var(--cyan-dim); }
+.resource-icon.ember { background: rgba(255,107,53,0.12); }
+.resource-icon.mixed {
+  background: linear-gradient(135deg, var(--cyan-dim), rgba(255,107,53,0.1));
+}
+
+.resource-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 0.5rem;
+  line-height: 1.25;
+}
+.resource-card p {
+  font-size: 0.85rem;
+  color: var(--slate);
+  line-height: 1.55;
+  flex-grow: 1;
+}
+.resource-card .card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 1rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--cyan);
+  text-decoration: none;
+  transition: gap 0.3s, color 0.3s;
+}
+.resource-card .card-link:hover {
+  gap: 0.6rem;
+  color: var(--white);
+}
+
+/* --- ABOUT / CTA SECTION --- */
+.about-section {
+  padding: 3rem 0;
+  border-top: 1px solid var(--glass-border);
+}
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  align-items: center;
+}
+@media (min-width: 700px) {
+  .about-grid { grid-template-columns: 1fr 1.2fr; }
+}
+
+.about-card {
+  background: var(--ink-surface);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 2rem;
+}
+.about-card .about-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ember);
+  margin-bottom: 0.75rem;
+}
+.about-card h2 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  line-height: 1.2;
+}
+.about-card p {
+  font-size: 0.9rem;
+  color: var(--cloud);
+  line-height: 1.65;
+  margin-bottom: 0.75rem;
+}
+
+.cta-card {
+  background: linear-gradient(135deg, var(--ink-surface), rgba(0,212,170,0.05));
+  border: 1px solid rgba(0,212,170,0.15);
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+}
+.cta-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+}
+.cta-card p {
+  font-size: 0.88rem;
+  color: var(--slate);
+  margin-bottom: 1.25rem;
+  line-height: 1.55;
+}
+.cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 2rem;
+  background: linear-gradient(135deg, var(--ember), #e55a2b);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s;
+  box-shadow: 0 4px 20px rgba(255,107,53,0.25);
+}
+.cta-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 28px rgba(255,107,53,0.35);
+}
+
+.services-list {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0;
+}
+.services-list li {
+  font-size: 0.82rem;
+  color: var(--cloud);
+  padding: 0.35rem 0 0.35rem 1.5rem;
+  position: relative;
+}
+.services-list li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--cyan);
+  font-weight: 600;
+}
+
+/* --- FOOTER --- */
+.page-footer {
+  text-align: center;
+  padding: 2.5rem 1.5rem;
+  font-size: 0.75rem;
+  color: var(--slate);
+  border-top: 1px solid var(--glass-border);
+  margin-top: 2rem;
+}
+.page-footer strong { color: var(--cloud); }
+.page-footer a { color: var(--cyan); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<div class="bg-ambient" aria-hidden="true"></div>
+
+<div class="page">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <span class="hero-eyebrow">LearnAIID LLC — Workshop Resources</span>
+      <h1><span class="gradient-text">The Authenticity Lab</span></h1>
+      <p class="subtitle">Crafting "Un-Googlable" Tasks with NotebookLM, ChatGPT, and Gemini. Your takeaway resources from today's session — free to use, adapt, and share with attribution.</p>
+      <div class="hero-divider"></div>
+    </div>
+  </section>
+
+  <!-- RESOURCES -->
+  <section class="resources-section">
+    <div class="container">
+      <div class="resources-grid">
+
+        <div class="resource-card">
+          <span class="resource-number">01</span>
+          <div class="resource-icon teal">📋</div>
+          <h3>Assignment Redesign Worksheet</h3>
+          <p>A five-step framework to transform any existing assignment into a process-based, AI-integrated assessment. Includes a built-in Process-Oriented Rubric with five criteria and suggested weightings.</p>
+          <a href="assignment-redesign-worksheet.html" class="card-link" target="_blank">Open Resource →</a>
+        </div>
+
+        <div class="resource-card">
+          <span class="resource-number">02</span>
+          <div class="resource-icon ember">🔗</div>
+          <h3>Shared Chat Submission Workflow</h3>
+          <p>Step-by-step guide for requiring and collecting AI conversation links from ChatGPT, Gemini, and NotebookLM. Includes LMS setup options, copy-paste syllabus language, student FAQ, and troubleshooting.</p>
+          <a href="shared-chat-workflow.html" class="card-link" target="_blank">Open Resource →</a>
+        </div>
+
+        <div class="resource-card">
+          <span class="resource-number">03</span>
+          <div class="resource-icon mixed">📊</div>
+          <h3>Process-Oriented Rubric</h3>
+          <p>A standalone rubric that grades the learning journey: Prompt Quality, Source Interrogation, Hallucination Detection, Human Synthesis, and Reflection. Customizable weightings for any discipline.</p>
+          <a href="process-oriented-rubric.html" class="card-link" target="_blank">Open Resource →</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT + CTA -->
+  <section class="about-section">
+    <div class="container">
+      <div class="about-grid">
+
+        <div class="about-card">
+          <div class="about-eyebrow">About the Presenter</div>
+          <h2>Page Durham</h2>
+          <p>Founder of <strong>LearnAIID LLC</strong> — an AI consulting practice specializing in educational technology, accessibility compliance, and instructional design for higher education, K-12, and government organizations.</p>
+          <p>Page brings deep expertise in WCAG 2.1 AA compliance, Canvas LMS development, AI integration in education, and workshop facilitation. She has delivered TEDx presentations and leads accessibility compliance initiatives across Virginia's community college system.</p>
+          <ul class="services-list">
+            <li>AI-Integrated Assessment Design</li>
+            <li>WCAG 2.1 AA Accessibility Compliance</li>
+            <li>Faculty Workshops &amp; Training Programs</li>
+            <li>Canvas LMS Course Development</li>
+            <li>Instructional Design Consulting</li>
+          </ul>
+        </div>
+
+        <div class="cta-card">
+          <h3>Bring This Workshop to Your Campus</h3>
+          <p>Need help redesigning assessments for the AI era? Want a customized version of The Authenticity Lab for your faculty? Let's talk.</p>
+          <a href="mailto:learnaiid.pd@gmail.com?subject=Authenticity%20Lab%20Inquiry" class="cta-btn">
+            ✉ Get in Touch
+          </a>
+          <p style="margin-top:1rem; font-size:0.78rem; color:var(--slate);">learnaiid.pd@gmail.com</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="page-footer">
+    <p><strong>LearnAIID LLC</strong> &bull; AI Consulting for Education, Accessibility &amp; Instructional Design<
