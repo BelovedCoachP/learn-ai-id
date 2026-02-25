@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Process-Oriented Rubric — The Authenticity Lab | LearnAIID LLC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --brand-deep: #1a2744;
+    --brand-accent: #e86a2a;
+    --brand-accent-light: #f4a261;
+    --brand-teal: #2a9d8f;
+    --brand-teal-light: #d4f0ec;
+    --brand-warm-bg: #faf7f2;
+    --brand-warm-bg-alt: #f0ebe3;
+    --text-primary: #2c2c2c;
+    --text-secondary: #5a5a5a;
+    --text-on-dark: #f5f0e8;
+    --border-light: #ddd5c9;
+    --shadow-soft: 0 2px 12px rgba(26, 39, 68, 0.08);
+    --shadow-card: 0 4px 20px rgba(26, 39, 68, 0.1);
+    --radius: 8px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Source Sans 3', 'Segoe UI', sans-serif;
+    background: var(--brand-warm-bg);
+    color: var(--text-primary);
+    line-height: 1.7;
+    font-size: 17px;
+  }
+
+  /* --- HEADER --- */
+  .site-header {
+    background: var(--brand-deep);
+    color: var(--text-on-dark);
+    padding: 2.5rem 2rem 2rem;
+    position: relative;
+  }
+  .site-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--brand-accent), var(--brand-teal), var(--brand-accent-light));
+  }
+  .header-inner {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  .brand-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--brand-accent-light);
+    margin-bottom: 0.75rem;
+  }
+  .site-header h1 {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+  .site-header .subtitle {
+    font-size: 1.05rem;
+    font-weight: 300;
+    color: rgba(245, 240, 232, 0.8);
+    max-width: 640px;
+  }
+
+  /* --- MAIN --- */
+  .main-content {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 3rem;
+  }
+
+  /* --- PRINCIPLE --- */
+  .principle {
+    background: white;
+    border: 1px solid var(--border-light);
+    border-left: 4px solid var(--brand-accent);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow-soft);
+    font-size: 1.02rem;
+    color: var(--text-secondary);
+  }
+  .principle strong { color: var(--text-primary); }
+
+  /* --- RUBRIC TABLE --- */
+  .rubric-wrapper {
+    background: white;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+  }
+  .rubric-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  table.rubric {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+    min-width: 780px;
+  }
+
+  /* --- THEAD --- */
+  table.rubric thead th {
+    background: var(--brand-deep);
+    color: var(--text-on-dark);
+    font-weight: 600;
+    text-align: left;
+    padding: 0.9rem 1rem;
+    font-size: 0.82rem;
+    letter-spacing: 0.03em;
+    border-bottom: 3px solid var(--brand-accent);
+  }
+  table.rubric thead th:first-child {
+    width: 20%;
+  }
+  table.rubric thead th:not(:first-child) {
+    width: 20%;
+  }
+
+  /* --- TBODY --- */
+  table.rubric tbody td {
+    padding: 0.9rem 1rem;
+    border-bottom: 1px solid var(--border-light);
+    vertical-align: top;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+  table.rubric tbody tr:last-child td {
+    border-bottom: none;
+  }
+  table.rubric tbody tr:nth-child(even) td {
+    background: rgba(250, 247, 242, 0.5);
+  }
+
+  /* --- CRITERION CELL --- */
+  .criterion-name {
+    font-weight: 700;
+    color: var(--brand-deep);
+    font-size: 0.9rem;
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+  .criterion-weight {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    color: white;
+    background: var(--brand-accent);
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    display: inline-block;
+  }
+
+  /* --- LEVEL HIGHLIGHTS --- */
+  .level-exemplary {
+    border-left: 3px solid var(--brand-teal);
+    padding-left: calc(1rem - 3px);
+  }
+  .level-insufficient {
+    border-left: 3px solid #c0392b;
+    padding-left: calc(1rem - 3px);
+  }
+
+  /* --- CUSTOMIZATION NOTE --- */
+  .customization {
+    margin-top: 2rem;
+    background: var(--brand-teal-light);
+    border-left: 4px solid var(--brand-teal);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 1.25rem 1.5rem;
+    font-size: 0.92rem;
+    color: var(--text-primary);
+  }
+  .customization strong { color: var(--brand-deep); }
+
+  /* --- FOOTER --- */
+  .site-footer {
+    text-align: center;
+    padding: 2rem 1.5rem;
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    border-top: 1px solid var(--border-light);
+  }
+  .site-footer a {
+    color: var(--brand-teal);
+    text-decoration: none;
+  }
+  .site-footer a:hover { text-decoration: underline; }
+
+  /* --- PRINT --- */
+  @media print {
+    body { font-size: 10pt; background: white; }
+    .site-header { padding: 1rem; }
+    table.rubric { font-size: 8.5pt; min-width: unset; }
+    table.rubric thead th { background: #333; color: white; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .criterion-weight { background: #e86a2a; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .level-exemplary { border-left-color: #2a9d8f; }
+    .level-insufficient { border-left-color: #c0392b; }
+  }
+
+  @media (max-width: 640px) {
+    .site-header { padding: 1.5rem 1rem; }
+    .main-content { padding: 1.5rem 1rem 2.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header" role="banner">
+  <div class="header-inner">
+    <div class="brand-tag">LearnAIID LLC — The Authenticity Lab</div>
+    <h1>Process-Oriented Rubric</h1>
+    <p class="subtitle">Grade the learning journey, not just the final product. This rubric evaluates how students interact with AI as a transparent, documented part of the assignment.</p>
+  </div>
+</header>
+
+<main class="main-content" role="main">
+
+  <div class="principle">
+    <strong>Core principle:</strong> This rubric shifts assessment weight from the final deliverable to the documented process — how students prompted, questioned, fact-checked, and synthesized with AI tools. Adapt the weightings and descriptors to fit your discipline and assignment type.
+  </div>
+
+  <div class="rubric-wrapper">
+    <div class="rubric-scroll">
+      <table class="rubric" role="table">
+        <thead>
+          <tr>
+            <th scope="col">Criterion</th>
+            <th scope="col">Exemplary (A)</th>
+            <th scope="col">Proficient (B)</th>
+            <th scope="col">Developing (C)</th>
+            <th scope="col">Insufficient (D/F)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <span class="criterion-name">Prompt Quality &amp; Iteration</span>
+              <span class="criterion-weight">25%</span>
+            </td>
+            <td class="level-exemplary">Conversation shows sophisticated, evolving prompts. Student challenges AI assumptions, narrows scope, and requests evidence. Clear progression from initial query to refined output.</td>
+            <td>Multiple rounds of prompting with meaningful revisions. Student corrects at least one AI error or refines direction based on output quality.</td>
+            <td>Some iteration visible, but prompts are mostly surface-level rewording. Limited evidence of critical engagement with AI responses.</td>
+            <td class="level-insufficient">Single prompt with no revision. Conversation shows copy-paste behavior with no interrogation of AI outputs.</td>
+          </tr>
+          <tr>
+            <td>
+              <span class="criterion-name">Source Interrogation</span>
+              <span class="criterion-weight">20%</span>
+            </td>
+            <td class="level-exemplary">NotebookLM log shows deep, analytical questions about course materials. Student synthesizes across multiple sources and identifies contradictions or gaps in the literature.</td>
+            <td>Meaningful questions asked of course sources. Student connects AI-generated insights back to specific assigned readings.</td>
+            <td>Surface-level questions (e.g., "summarize this"). Minimal connection between AI output and course content.</td>
+            <td class="level-insufficient">No evidence of engaging with course sources through AI tools, or required sources not uploaded to NotebookLM.</td>
+          </tr>
+          <tr>
+            <td>
+              <span class="criterion-name">Fact-Checking &amp; Hallucination Detection</span>
+              <span class="criterion-weight">15%</span>
+            </td>
+            <td class="level-exemplary">Student identifies and documents specific AI errors or hallucinations. Provides corrections with cited evidence from course materials or credible external sources.</td>
+            <td>Student notes at least one inaccuracy in AI output and provides a correction supported by a credible source.</td>
+            <td>Student mentions AI might be wrong but provides no specific evidence or documented correction.</td>
+            <td class="level-insufficient">No evidence of evaluating AI accuracy. AI output accepted at face value without question.</td>
+          </tr>
+          <tr>
+            <td>
+              <span class="criterion-name">Human Synthesis &amp; Original Thinking</span>
+              <span class="criterion-weight">25%</span>
+            </td>
+            <td class="level-exemplary">Final product clearly extends beyond AI output. Student's own argument, analysis, or voice is dominant. AI served as a tool for exploration, not the author of the work.</td>
+            <td>Final product shows meaningful human revision. Student's perspective is present alongside AI-assisted content.</td>
+            <td>Final product is lightly edited AI output. Student voice is minimal and hard to distinguish from the AI's.</td>
+            <td class="level-insufficient">Final product is indistinguishable from raw AI output. No evidence of human revision or original thought.</td>
+          </tr>
+          <tr>
+            <td>
+              <span class="criterion-name">Reflection &amp; Metacognition</span>
+              <span class="criterion-weight">15%</span>
+            </td>
+            <td class="level-exemplary">Thoughtful reflection on how AI shaped the student's thinking. Articulates specific insights gained and what they would do differently in future AI-assisted work.</td>
+            <td>Adequate reflection addressing how AI was used and at least one specific insight gained from the process.</td>
+            <td>Generic reflection (e.g., "AI was helpful"). No specific insight about the learning process or personal growth.</td>
+            <td class="level-insufficient">No reflection submitted, or reflection does not address the AI interaction or learning process.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="customization">
+    <strong>Customization tips:</strong> Adjust the percentage weightings to reflect your priorities. For a research-heavy course, increase Source Interrogation. For a writing-intensive course, increase Human Synthesis. If you don't use NotebookLM, redistribute Source Interrogation weight across the other criteria. The total should always equal 100%.
+  </div>
+
+</main>
+
+<footer class="site-footer" role="contentinfo">
+  <p><strong>LearnAIID LLC</strong> — AI Consulting for Education, Accessibility &amp; Instructional Design</p>
+  <p>The Authenticity Lab: Crafting "Un-Googlable" Tasks &bull; <a href="https://learnaiid.com">learnaiid.com</a></p>
+  <p style="margin-top: 0.5rem;">&copy; 2025 LearnAIID LLC. Licensed for educational use with attribution.</p>
+</footer>
+
+</body>
+</html>
