@@ -8,108 +8,135 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=Outfit:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --ink: #0a0e1a;
-  --ink-mid: #111829;
-  --ink-surface: #161d30;
-  --ember: #ff6b35;
-  --ember-glow: #ff8c5a;
-  --cyan: #00d4aa;
-  --cyan-dim: rgba(0,212,170,0.1);
-  --slate: #8892a8;
-  --cloud: #c8d0e0;
-  --white: #f0f2f8;
-  --glass: rgba(255,255,255,0.04);
-  --glass-border: rgba(255,255,255,0.08);
+  /* === Lovable Design Tokens (exact match) === */
+  --background: #FFFFFF;
+  --foreground: #020817;
+  --primary: #0F172A;
+  --primary-foreground: #F8FAFC;
+  --secondary: #F1F5F9;
+  --muted: #F1F5F9;
+  --muted-foreground: #64748B;
+  --border: #E2E8F0;
+  --destructive: #EF4444;
+
+  /* Brand / Glow */
+  --brand-blue: #0080FF;
+  --brand-purple: #9945FF;
+  --brand-pink: #E54D9E;
+
+  /* Button */
+  --btn-blue: #2563EB;
+
+  /* Typography */
   --font-display: 'Playfair Display', Georgia, serif;
   --font-body: 'Outfit', system-ui, sans-serif;
   --font-mono: 'Fira Code', monospace;
+
+  /* Shared */
+  --radius: 12px;
+  --shadow-card: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+  --shadow-hover: 0 4px 24px rgba(0,0,0,0.1);
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 
 body {
   font-family: var(--font-body);
-  background: var(--ink);
-  color: var(--white);
+  background: var(--background);
+  color: var(--foreground);
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
 }
 
-/* --- BG --- */
-.bg-ambient {
-  position: fixed; inset: 0; z-index: 0; pointer-events: none;
-  background:
-    radial-gradient(ellipse 60% 50% at 15% 85%, rgba(255,107,53,0.07) 0%, transparent 70%),
-    radial-gradient(ellipse 50% 40% at 85% 15%, rgba(0,212,170,0.07) 0%, transparent 70%);
-}
-
 /* --- LAYOUT --- */
-.page { position: relative; z-index: 1; }
+.page { position: relative; }
+.container { max-width: 920px; margin: 0 auto; padding: 0 1.5rem; }
 
-.container {
-  max-width: 920px;
-  margin: 0 auto;
-  padding: 0 1.5rem;
-}
-
-/* --- HERO --- */
+/* --- HERO (dark gradient matching Lovable header) --- */
 .hero {
-  padding: 4rem 0 3rem;
+  background: linear-gradient(135deg, var(--primary) 0%, #1e1045 50%, #0c1a3a 100%);
+  padding: 3.5rem 0 3rem;
   text-align: center;
   position: relative;
+  overflow: hidden;
 }
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 50% 60% at 20% 80%, rgba(153,69,255,0.15) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 50% at 80% 20%, rgba(0,128,255,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--brand-blue), var(--brand-purple), var(--brand-pink));
+}
+.hero > .container { position: relative; z-index: 1; }
+
 .hero-eyebrow {
   font-family: var(--font-mono);
   font-size: 0.68rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--ember);
+  color: var(--brand-pink);
   margin-bottom: 1rem;
   display: block;
-  animation: fadeIn 0.8s ease;
 }
 .hero h1 {
   font-family: var(--font-display);
-  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-size: clamp(2rem, 5vw, 3rem);
   font-weight: 800;
   line-height: 1.1;
+  color: white;
   margin-bottom: 0.75rem;
-  animation: fadeSlideUp 0.8s ease;
 }
-.hero h1 .gradient-text {
-  background: linear-gradient(135deg, var(--white) 20%, var(--cyan) 80%);
+.hero h1 .accent {
+  background: linear-gradient(135deg, var(--brand-purple), var(--brand-pink));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 .hero .subtitle {
-  font-size: 1.1rem;
-  color: var(--cloud);
+  font-size: 1.05rem;
+  color: rgba(255,255,255,0.7);
   font-weight: 300;
   max-width: 560px;
   margin: 0 auto;
   line-height: 1.6;
-  animation: fadeSlideUp 0.8s ease 0.15s both;
 }
 .hero-divider {
   width: 60px;
   height: 3px;
-  background: linear-gradient(90deg, var(--ember), var(--cyan));
+  background: linear-gradient(90deg, var(--brand-blue), var(--brand-purple));
   margin: 2rem auto 0;
   border-radius: 3px;
-  animation: fadeIn 0.8s ease 0.3s both;
 }
 
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-@keyframes fadeSlideUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* --- RESOURCE CARDS --- */
+/* --- RESOURCE CARDS SECTION --- */
 .resources-section {
   padding: 3rem 0;
+  background: var(--secondary);
+}
+.section-heading {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.section-heading h2 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--foreground);
+  margin-bottom: 0.4rem;
+}
+.section-heading p {
+  font-size: 0.9rem;
+  color: var(--muted-foreground);
 }
 .resources-grid {
   display: grid;
@@ -121,29 +148,30 @@ body {
 }
 
 .resource-card {
-  background: var(--ink-surface);
-  border: 1px solid var(--glass-border);
-  border-radius: 16px;
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
   padding: 1.75rem 1.5rem;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  box-shadow: var(--shadow-card);
 }
 .resource-card::before {
   content: '';
   position: absolute;
   top: 0; left: 0; right: 0;
   height: 3px;
-  background: linear-gradient(90deg, var(--ember), var(--cyan));
+  background: linear-gradient(90deg, var(--brand-blue), var(--brand-purple));
   opacity: 0;
-  transition: opacity 0.4s;
+  transition: opacity 0.35s;
 }
 .resource-card:hover {
-  border-color: rgba(255,255,255,0.15);
   transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+  box-shadow: var(--shadow-hover);
+  border-color: rgba(37,99,235,0.25);
 }
 .resource-card:hover::before { opacity: 1; }
 
@@ -151,8 +179,8 @@ body {
   font-family: var(--font-display);
   font-size: 2.5rem;
   font-weight: 800;
-  color: var(--ink-mid);
-  -webkit-text-stroke: 1px rgba(255,255,255,0.08);
+  color: var(--secondary);
+  -webkit-text-stroke: 1px var(--border);
   position: absolute;
   top: 0.75rem;
   right: 1rem;
@@ -160,130 +188,106 @@ body {
 }
 .resource-icon {
   width: 44px; height: 44px;
-  border-radius: 12px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.3rem;
   margin-bottom: 1rem;
 }
-.resource-icon.teal { background: var(--cyan-dim); }
-.resource-icon.ember { background: rgba(255,107,53,0.12); }
-.resource-icon.mixed {
-  background: linear-gradient(135deg, var(--cyan-dim), rgba(255,107,53,0.1));
-}
+.resource-icon.blue { background: rgba(0,128,255,0.1); }
+.resource-icon.purple { background: rgba(153,69,255,0.1); }
+.resource-icon.pink { background: rgba(229,77,158,0.1); }
 
 .resource-card h3 {
   font-family: var(--font-display);
   font-size: 1.15rem;
   font-weight: 700;
-  color: var(--white);
+  color: var(--foreground);
   margin-bottom: 0.5rem;
   line-height: 1.25;
 }
 .resource-card p {
   font-size: 0.85rem;
-  color: var(--slate);
+  color: var(--muted-foreground);
   line-height: 1.55;
   flex-grow: 1;
 }
-.resource-card .card-link {
+.card-link {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
   margin-top: 1rem;
-  font-size: 0.82rem;
+  font-size: 0.85rem;
   font-weight: 600;
-  color: var(--cyan);
+  color: var(--btn-blue);
   text-decoration: none;
   transition: gap 0.3s, color 0.3s;
 }
-.resource-card .card-link:hover {
+.card-link:hover {
   gap: 0.6rem;
-  color: var(--white);
+  color: var(--brand-purple);
+}
+.new-tab-hint {
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: var(--muted-foreground);
+}
+
+/* --- INFO NOTE --- */
+.info-note {
+  text-align: center;
+  padding: 1.5rem 0 0;
+  font-size: 0.82rem;
+  color: var(--muted-foreground);
+  line-height: 1.5;
 }
 
 /* --- ABOUT / CTA SECTION --- */
 .about-section {
   padding: 3rem 0;
-  border-top: 1px solid var(--glass-border);
+  background: var(--background);
+  border-top: 1px solid var(--border);
 }
 .about-grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 2rem;
-  align-items: center;
+  align-items: start;
 }
 @media (min-width: 700px) {
   .about-grid { grid-template-columns: 1fr 1.2fr; }
 }
 
 .about-card {
-  background: var(--ink-surface);
-  border: 1px solid var(--glass-border);
-  border-radius: 16px;
+  background: var(--secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
   padding: 2rem;
 }
-.about-card .about-eyebrow {
+.about-eyebrow {
   font-family: var(--font-mono);
   font-size: 0.62rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--ember);
+  color: var(--brand-purple);
   margin-bottom: 0.75rem;
 }
 .about-card h2 {
   font-family: var(--font-display);
   font-size: 1.5rem;
   font-weight: 700;
+  color: var(--foreground);
   margin-bottom: 0.75rem;
   line-height: 1.2;
 }
 .about-card p {
   font-size: 0.9rem;
-  color: var(--cloud);
+  color: var(--muted-foreground);
   line-height: 1.65;
   margin-bottom: 0.75rem;
 }
-
-.cta-card {
-  background: linear-gradient(135deg, var(--ink-surface), rgba(0,212,170,0.05));
-  border: 1px solid rgba(0,212,170,0.15);
-  border-radius: 16px;
-  padding: 2rem;
-  text-align: center;
-}
-.cta-card h3 {
-  font-family: var(--font-display);
-  font-size: 1.3rem;
-  margin-bottom: 0.5rem;
-}
-.cta-card p {
-  font-size: 0.88rem;
-  color: var(--slate);
-  margin-bottom: 1.25rem;
-  line-height: 1.55;
-}
-.cta-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.85rem 2rem;
-  background: linear-gradient(135deg, var(--ember), #e55a2b);
-  color: white;
-  border: none;
-  border-radius: 10px;
-  font-family: var(--font-body);
-  font-size: 0.9rem;
-  font-weight: 600;
-  text-decoration: none;
-  transition: all 0.3s;
-  box-shadow: 0 4px 20px rgba(255,107,53,0.25);
-}
-.cta-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 28px rgba(255,107,53,0.35);
-}
+.about-card p strong { color: var(--foreground); }
 
 .services-list {
   list-style: none;
@@ -292,16 +296,58 @@ body {
 }
 .services-list li {
   font-size: 0.82rem;
-  color: var(--cloud);
+  color: var(--muted-foreground);
   padding: 0.35rem 0 0.35rem 1.5rem;
   position: relative;
 }
 .services-list li::before {
-  content: '→';
+  content: '\2192';
   position: absolute;
   left: 0;
-  color: var(--cyan);
+  color: var(--brand-purple);
   font-weight: 600;
+}
+
+/* CTA Card */
+.cta-card {
+  background: linear-gradient(135deg, var(--primary) 0%, #1e1045 100%);
+  border: 1px solid rgba(153,69,255,0.2);
+  border-radius: var(--radius);
+  padding: 2rem;
+  text-align: center;
+  color: white;
+}
+.cta-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+  color: white;
+}
+.cta-card p {
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.65);
+  margin-bottom: 1.25rem;
+  line-height: 1.55;
+}
+.cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 2rem;
+  background: linear-gradient(135deg, var(--brand-purple), var(--brand-pink));
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s;
+  box-shadow: 0 4px 20px rgba(153,69,255,0.3);
+}
+.cta-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 28px rgba(153,69,255,0.4);
 }
 
 /* --- FOOTER --- */
@@ -309,17 +355,27 @@ body {
   text-align: center;
   padding: 2.5rem 1.5rem;
   font-size: 0.75rem;
-  color: var(--slate);
-  border-top: 1px solid var(--glass-border);
+  color: var(--muted-foreground);
+  border-top: 1px solid var(--border);
   margin-top: 2rem;
 }
-.page-footer strong { color: var(--cloud); }
-.page-footer a { color: var(--cyan); text-decoration: none; }
+.page-footer strong { color: var(--foreground); }
+.page-footer a { color: var(--btn-blue); text-decoration: none; }
+
+/* --- PRINT --- */
+@media print {
+  .hero { background: #1a1a2e !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .resource-card { break-inside: avoid; }
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 640px) {
+  .hero { padding: 2.5rem 0 2rem; }
+  .container { padding: 0 1rem; }
+}
 </style>
 </head>
 <body>
-
-<div class="bg-ambient" aria-hidden="true"></div>
 
 <div class="page">
 
@@ -327,7 +383,7 @@ body {
   <section class="hero">
     <div class="container">
       <span class="hero-eyebrow">LearnAIID LLC — Workshop Resources</span>
-      <h1><span class="gradient-text">The Authenticity Lab</span></h1>
+      <h1>The Authenticity <span class="accent">Lab</span></h1>
       <p class="subtitle">Crafting "Un-Googlable" Tasks with NotebookLM, ChatGPT, and Gemini. Your takeaway resources from today's session — free to use, adapt, and share with attribution.</p>
       <div class="hero-divider"></div>
     </div>
@@ -336,33 +392,44 @@ body {
   <!-- RESOURCES -->
   <section class="resources-section">
     <div class="container">
+
+      <div class="section-heading">
+        <h2>Your Takeaway Resources</h2>
+        <p>Three tools to redesign any assignment for the AI era.</p>
+      </div>
+
       <div class="resources-grid">
 
         <div class="resource-card">
           <span class="resource-number">01</span>
-          <div class="resource-icon teal">📋</div>
+          <div class="resource-icon blue">&#x1F4CB;</div>
           <h3>Assignment Redesign Worksheet</h3>
           <p>A five-step framework to transform any existing assignment into a process-based, AI-integrated assessment. Includes a built-in Process-Oriented Rubric with five criteria and suggested weightings.</p>
-          <a href="assignment-redesign-worksheet.html" class="card-link" target="_blank">Open Resource →</a>
+          <a href="assignment-redesign-worksheet.html" class="card-link" target="_blank" rel="noopener">Open Resource &#x2197; <span class="new-tab-hint">(opens in new tab)</span></a>
         </div>
 
         <div class="resource-card">
           <span class="resource-number">02</span>
-          <div class="resource-icon ember">🔗</div>
+          <div class="resource-icon purple">&#x1F517;</div>
           <h3>Shared Chat Submission Workflow</h3>
           <p>Step-by-step guide for requiring and collecting AI conversation links from ChatGPT, Gemini, and NotebookLM. Includes LMS setup options, copy-paste syllabus language, student FAQ, and troubleshooting.</p>
-          <a href="shared-chat-workflow.html" class="card-link" target="_blank">Open Resource →</a>
+          <a href="shared-chat-workflow.html" class="card-link" target="_blank" rel="noopener">Open Resource &#x2197; <span class="new-tab-hint">(opens in new tab)</span></a>
         </div>
 
         <div class="resource-card">
           <span class="resource-number">03</span>
-          <div class="resource-icon mixed">📊</div>
+          <div class="resource-icon pink">&#x1F4CA;</div>
           <h3>Process-Oriented Rubric</h3>
           <p>A standalone rubric that grades the learning journey: Prompt Quality, Source Interrogation, Hallucination Detection, Human Synthesis, and Reflection. Customizable weightings for any discipline.</p>
-          <a href="process-oriented-rubric.html" class="card-link" target="_blank">Open Resource →</a>
+          <a href="process-oriented-rubric.html" class="card-link" target="_blank" rel="noopener">Open Resource &#x2197; <span class="new-tab-hint">(opens in new tab)</span></a>
         </div>
 
       </div>
+
+      <div class="info-note">
+        Each resource opens in a new tab so you don't lose your place. Save, print, or bookmark for later.
+      </div>
+
     </div>
   </section>
 
@@ -374,7 +441,7 @@ body {
         <div class="about-card">
           <div class="about-eyebrow">About the Presenter</div>
           <h2>Page Durham</h2>
-          <p>Founder of <strong>LearnAIID LLC</strong> — an AI consulting practice specializing in educational technology, accessibility compliance, and instructional design for higher education, K-12, and government organizations.</p>
+          <p>Founder of <strong>LearnAIID LLC</strong> &#x2014; an AI consulting practice specializing in educational technology, accessibility compliance, and instructional design for higher education, K-12, and government organizations.</p>
           <p>Page brings deep expertise in WCAG 2.1 AA compliance, Canvas LMS development, AI integration in education, and workshop facilitation. She has delivered TEDx presentations and leads accessibility compliance initiatives across Virginia's community college system.</p>
           <ul class="services-list">
             <li>AI-Integrated Assessment Design</li>
@@ -388,10 +455,10 @@ body {
         <div class="cta-card">
           <h3>Bring This Workshop to Your Campus</h3>
           <p>Need help redesigning assessments for the AI era? Want a customized version of The Authenticity Lab for your faculty? Let's talk.</p>
-          <a href="mailto:learnaiid.pd@gmail.com?subject=Authenticity%20Lab%20Inquiry" class="cta-btn">
-            ✉ Get in Touch
+          <a href="mailto:learnaiid.pd@gmail.com?subject=Authenticity%20Lab%20Workshop%20Inquiry" class="cta-btn">
+            &#x2709; Get in Touch
           </a>
-          <p style="margin-top:1rem; font-size:0.78rem; color:var(--slate);">learnaiid.pd@gmail.com</p>
+          <p style="margin-top:1rem; font-size:0.78rem; color:rgba(255,255,255,0.5);">learnaiid.pd@gmail.com</p>
         </div>
 
       </div>
@@ -400,4 +467,10 @@ body {
 
   <!-- FOOTER -->
   <footer class="page-footer">
-    <p><strong>LearnAIID LLC</strong> &bull; AI Consulting for Education, Accessibility &amp; Instructional Design<
+    <p><strong>LearnAIID LLC</strong> &bull; AI Consulting for Education, Accessibility &amp; Instructional Design</p>
+    <p style="margin-top:0.4rem;">&copy; 2025 LearnAIID LLC &bull; <a href="https://learnaiid.com">learnaiid.com</a> &bull; Free to use and adapt with attribution</p>
+  </footer>
+</div>
+
+</body>
+</html>
