@@ -8,20 +8,21 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --brand-deep: #1a2744;
-    --brand-accent: #e86a2a;
-    --brand-accent-light: #f4a261;
-    --brand-teal: #2a9d8f;
-    --brand-teal-light: #d4f0ec;
-    --brand-warm-bg: #faf7f2;
-    --brand-warm-bg-alt: #f0ebe3;
-    --text-primary: #2c2c2c;
-    --text-secondary: #5a5a5a;
-    --text-on-dark: #f5f0e8;
-    --border-light: #ddd5c9;
-    --shadow-soft: 0 2px 12px rgba(26, 39, 68, 0.08);
-    --shadow-card: 0 4px 20px rgba(26, 39, 68, 0.1);
-    --radius: 8px;
+    /* === Lovable Brand Tokens === */
+    --brand-deep: #0F172A;
+    --brand-accent: #9945FF;
+    --brand-accent-light: #E54D9E;
+    --brand-teal: #2563EB;
+    --brand-teal-light: rgba(37, 99, 235, 0.08);
+    --brand-warm-bg: #FFFFFF;
+    --brand-warm-bg-alt: #F1F5F9;
+    --text-primary: #020817;
+    --text-secondary: #64748B;
+    --text-on-dark: #F8FAFC;
+    --border-light: #E2E8F0;
+    --shadow-soft: 0 1px 3px rgba(0, 0, 0, 0.06), 0 4px 16px rgba(0, 0, 0, 0.04);
+    --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.08);
+    --radius: 12px;
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -172,7 +173,7 @@
     padding-left: calc(1rem - 3px);
   }
   .level-insufficient {
-    border-left: 3px solid #c0392b;
+    border-left: 3px solid var(--destructive, #EF4444);
     padding-left: calc(1rem - 3px);
   }
 
