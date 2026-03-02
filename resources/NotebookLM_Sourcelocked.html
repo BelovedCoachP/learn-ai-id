@@ -1,653 +1,570 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crafting the Source-Locked Inquiry | The Authenticity Lab</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700&family=JetBrains+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,700;1,9..144,400&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --navy: #0f172a;
-            --navy-mid: #1e293b;
-            --navy-light: #334155;
-            --purple: #7c3aed;
-            --purple-light: #a78bfa;
-            --purple-glow: rgba(124, 58, 237, 0.15);
-            --teal: #06b6d4;
-            --teal-light: #22d3ee;
-            --coral: #f472b6;
-            --white: #f8fafc;
-            --gray: #94a3b8;
-            --gray-light: #cbd5e1;
-            --success: #34d399;
-            --warning: #fbbf24;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crafting the Source-Locked Inquiry — The Authenticity Lab | LearnAIID LLC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --brand-deep: #0F172A;
+    --brand-accent: #9945FF;
+    --brand-accent-light: #E54D9E;
+    --brand-teal: #2563EB;
+    --brand-teal-light: rgba(37, 99, 235, 0.08);
+    --brand-warm-bg: #FFFFFF;
+    --brand-warm-bg-alt: #F1F5F9;
+    --text-primary: #020817;
+    --text-secondary: #64748B;
+    --text-on-dark: #F8FAFC;
+    --border-light: #E2E8F0;
+    --shadow-soft: 0 1px 3px rgba(0, 0, 0, 0.06), 0 4px 16px rgba(0, 0, 0, 0.04);
+    --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.08);
+    --radius: 12px;
+    --green: #16a34a;
+    --green-bg: #f0fdf4;
+    --green-border: #bbf7d0;
+    --amber: #d97706;
+    --amber-bg: #fffbeb;
+    --amber-border: #fde68a;
+  }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        body {
-            font-family: 'DM Sans', sans-serif;
-            background: var(--navy);
-            color: var(--white);
-            line-height: 1.7;
-            overflow-x: hidden;
-        }
+  body {
+    font-family: 'Source Sans 3', 'Segoe UI', sans-serif;
+    background: var(--brand-warm-bg);
+    color: var(--text-primary);
+    line-height: 1.7;
+    font-size: 17px;
+    -webkit-font-smoothing: antialiased;
+  }
 
-        /* Subtle grid background */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-image: 
-                linear-gradient(rgba(124, 58, 237, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(124, 58, 237, 0.03) 1px, transparent 1px);
-            background-size: 60px 60px;
-            pointer-events: none;
-            z-index: 0;
-        }
+  /* --- HEADER --- */
+  .site-header {
+    background: var(--brand-deep);
+    color: var(--text-on-dark);
+    padding: 2.5rem 2rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .site-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--brand-accent), var(--brand-teal), var(--brand-accent-light));
+  }
+  .header-inner {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+  .brand-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--brand-accent-light);
+    margin-bottom: 0.75rem;
+  }
+  .site-header h1 {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+  .site-header .subtitle {
+    font-size: 1.05rem;
+    font-weight: 300;
+    color: rgba(245, 240, 232, 0.8);
+    max-width: 600px;
+  }
 
-        .container {
-            max-width: 820px;
-            margin: 0 auto;
-            padding: 0 24px;
-            position: relative;
-            z-index: 1;
-        }
+  /* --- MAIN --- */
+  .main-content {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 4rem;
+  }
 
-        /* HEADER */
-        header {
-            padding: 60px 0 40px;
-            text-align: center;
-            position: relative;
-        }
+  /* --- SECTION --- */
+  .section {
+    margin-bottom: 2.5rem;
+  }
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--brand-teal);
+    margin-bottom: 0.4rem;
+  }
+  .section h2 {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: var(--brand-deep);
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+  }
+  .section p, .section li {
+    color: var(--text-secondary);
+    margin-bottom: 0.6rem;
+  }
 
-        .badge {
-            display: inline-block;
-            background: var(--purple-glow);
-            border: 1px solid rgba(124, 58, 237, 0.3);
-            color: var(--purple-light);
-            font-size: 0.75rem;
-            font-weight: 600;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            padding: 6px 16px;
-            border-radius: 100px;
-            margin-bottom: 24px;
-        }
+  /* --- INTRO CARD --- */
+  .intro-card {
+    background: white;
+    border: 1px solid var(--border-light);
+    border-left: 4px solid var(--brand-accent);
+    border-radius: var(--radius);
+    padding: 1.5rem 1.75rem;
+    margin-bottom: 2.5rem;
+    box-shadow: var(--shadow-soft);
+  }
+  .intro-card p {
+    color: var(--text-secondary);
+    font-size: 1.02rem;
+  }
+  .intro-card strong { color: var(--text-primary); }
 
-        h1 {
-            font-family: 'Fraunces', serif;
-            font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 700;
-            line-height: 1.2;
-            margin-bottom: 12px;
-            background: linear-gradient(135deg, var(--white) 0%, var(--purple-light) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
+  /* --- STEP CARDS --- */
+  .step-card {
+    background: white;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius);
+    padding: 1.75rem 2rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow-soft);
+    position: relative;
+  }
+  .step-card::before {
+    content: attr(data-step);
+    position: absolute;
+    top: -0.75rem;
+    left: 1.25rem;
+    background: var(--brand-deep);
+    color: var(--text-on-dark);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    text-transform: uppercase;
+  }
+  .step-card h3 {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: var(--brand-deep);
+    margin-bottom: 0.6rem;
+    margin-top: 0.25rem;
+  }
+  .step-card p {
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+  }
+  .step-card strong { color: var(--text-primary); }
 
-        .subtitle {
-            font-size: 1.15rem;
-            color: var(--gray);
-            max-width: 600px;
-            margin: 0 auto 32px;
-        }
+  /* --- ORDERED LISTS INSIDE STEPS --- */
+  .step-list {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+    counter-reset: step-counter;
+  }
+  .step-list li {
+    padding: 0.5rem 0 0.5rem 2.5rem;
+    position: relative;
+    color: var(--text-secondary);
+    counter-increment: step-counter;
+  }
+  .step-list li::before {
+    content: counter(step-counter);
+    position: absolute;
+    left: 0;
+    top: 0.45rem;
+    width: 26px;
+    height: 26px;
+    background: var(--brand-warm-bg-alt);
+    border: 1px solid var(--border-light);
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--brand-teal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    line-height: 26px;
+  }
+  .step-list li strong { color: var(--text-primary); }
 
-        .tool-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--navy-mid);
-            border: 1px solid var(--navy-light);
-            padding: 8px 20px;
-            border-radius: 100px;
-            font-size: 0.9rem;
-            color: var(--teal-light);
-            font-weight: 500;
-        }
+  /* --- UNORDERED LISTS --- */
+  .detail-list {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+  }
+  .detail-list li {
+    padding: 0.4rem 0 0.4rem 1.5rem;
+    position: relative;
+    color: var(--text-secondary);
+  }
+  .detail-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.85rem;
+    width: 6px;
+    height: 6px;
+    background: var(--brand-accent);
+    border-radius: 50%;
+  }
+  .detail-list li strong { color: var(--text-primary); }
 
-        .tool-tag svg { width: 18px; height: 18px; }
+  /* --- TIP BOX --- */
+  .tip-box {
+    background: var(--green-bg);
+    border: 1px solid var(--green-border);
+    border-left: 4px solid var(--green);
+    border-radius: var(--radius);
+    padding: 1rem 1.25rem;
+    margin: 1rem 0;
+  }
+  .tip-box p {
+    color: #15803d;
+    font-size: 0.92rem;
+    margin: 0;
+  }
+  .tip-box strong { color: #166534; }
 
-        /* WHY BOX */
-        .why-box {
-            background: linear-gradient(135deg, rgba(6, 182, 212, 0.08), rgba(124, 58, 237, 0.08));
-            border: 1px solid rgba(6, 182, 212, 0.2);
-            border-radius: 16px;
-            padding: 28px 32px;
-            margin: 40px 0;
-        }
+  /* --- WARNING BOX --- */
+  .warning-box {
+    background: var(--amber-bg);
+    border: 1px solid var(--amber-border);
+    border-left: 4px solid var(--amber);
+    border-radius: var(--radius);
+    padding: 1rem 1.25rem;
+    margin: 1rem 0;
+  }
+  .warning-box p {
+    color: #92400e;
+    font-size: 0.92rem;
+    margin: 0;
+  }
+  .warning-box strong { color: #78350f; }
 
-        .why-box h2 {
-            font-family: 'Fraunces', serif;
-            font-size: 1.3rem;
-            color: var(--teal-light);
-            margin-bottom: 12px;
-        }
+  /* --- PROMPT BOX --- */
+  .prompt-box {
+    background: var(--brand-deep);
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    margin: 1rem 0;
+  }
+  .prompt-box .prompt-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--brand-accent-light);
+    margin-bottom: 0.4rem;
+  }
+  .prompt-box p {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.88rem;
+    color: rgba(248, 250, 252, 0.85);
+    line-height: 1.6;
+    margin: 0;
+  }
 
-        .why-box p {
-            color: var(--gray-light);
-            font-size: 0.95rem;
-        }
+  /* --- EXAMPLE GRID --- */
+  .example-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 1rem 0;
+  }
+  @media (max-width: 640px) {
+    .example-grid { grid-template-columns: 1fr; }
+  }
+  .example-card {
+    background: var(--brand-warm-bg-alt);
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+  }
+  .example-card .discipline {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--brand-accent-light);
+    margin-bottom: 0.4rem;
+  }
+  .example-card p {
+    font-size: 0.9rem;
+    font-style: italic;
+    color: var(--text-secondary);
+    margin: 0;
+  }
 
-        .why-box strong { color: var(--white); }
+  /* --- CHECKLIST --- */
+  .checklist-section {
+    background: white;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+    margin-top: 2.5rem;
+  }
+  .checklist-header {
+    background: var(--brand-deep);
+    color: var(--text-on-dark);
+    padding: 1.25rem 1.75rem;
+  }
+  .checklist-header h2 {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: var(--text-on-dark);
+    margin: 0;
+  }
+  .checklist-body {
+    padding: 1.25rem 1.75rem;
+  }
+  .checklist {
+    list-style: none;
+    padding: 0;
+  }
+  .checklist li {
+    padding: 0.5rem 0 0.5rem 2rem;
+    position: relative;
+    color: var(--text-secondary);
+    border-bottom: 1px solid #f1f5f9;
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.6rem;
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--border-light);
+    border-radius: 4px;
+    background: white;
+  }
+  .checklist li strong { color: var(--text-primary); }
 
-        /* STEPS */
-        .step {
-            position: relative;
-            margin: 48px 0;
-            padding-left: 72px;
-        }
+  /* --- DIVIDER --- */
+  .divider {
+    border: none;
+    height: 1px;
+    background: var(--border-light);
+    margin: 2rem 0;
+  }
 
-        .step::before {
-            content: '';
-            position: absolute;
-            left: 27px;
-            top: 56px;
-            bottom: -48px;
-            width: 2px;
-            background: linear-gradient(to bottom, var(--purple) 0%, rgba(124, 58, 237, 0.1) 100%);
-        }
+  /* --- FOOTER --- */
+  .site-footer {
+    text-align: center;
+    padding: 2rem 1.5rem;
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    border-top: 1px solid var(--border-light);
+  }
+  .site-footer a {
+    color: var(--brand-teal);
+    text-decoration: none;
+  }
+  .site-footer a:hover { text-decoration: underline; }
 
-        .step:last-of-type::before { display: none; }
+  @media print {
+    body { font-size: 11pt; background: white; }
+    .site-header { padding: 1rem; }
+    .step-card, .checklist-section { break-inside: avoid; }
+  }
 
-        .step-number {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 56px;
-            height: 56px;
-            background: var(--purple);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Fraunces', serif;
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: var(--white);
-            box-shadow: 0 0 30px rgba(124, 58, 237, 0.3);
-        }
-
-        .step h3 {
-            font-size: 1.35rem;
-            font-weight: 700;
-            margin-bottom: 6px;
-            padding-top: 4px;
-        }
-
-        .step .step-time {
-            font-size: 0.8rem;
-            color: var(--purple-light);
-            font-weight: 600;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            margin-bottom: 14px;
-        }
-
-        .step p {
-            color: var(--gray-light);
-            font-size: 0.95rem;
-            margin-bottom: 16px;
-        }
-
-        /* Instruction cards */
-        .instruction-card {
-            background: var(--navy-mid);
-            border: 1px solid var(--navy-light);
-            border-radius: 12px;
-            padding: 20px 24px;
-            margin: 16px 0;
-        }
-
-        .instruction-card h4 {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: var(--purple-light);
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-
-        .instruction-card ol, .instruction-card ul {
-            padding-left: 20px;
-            color: var(--gray-light);
-            font-size: 0.92rem;
-        }
-
-        .instruction-card li {
-            margin-bottom: 8px;
-        }
-
-        .instruction-card li strong { color: var(--white); }
-
-        /* Prompt boxes */
-        .prompt-box {
-            background: var(--navy-mid);
-            border-left: 3px solid var(--teal);
-            border-radius: 0 12px 12px 0;
-            padding: 20px 24px;
-            margin: 16px 0;
-            position: relative;
-        }
-
-        .prompt-box::before {
-            content: 'EXAMPLE PROMPT';
-            position: absolute;
-            top: -10px;
-            left: 16px;
-            background: var(--navy);
-            padding: 0 8px;
-            font-size: 0.65rem;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--teal);
-            font-weight: 600;
-        }
-
-        .prompt-box p {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.88rem;
-            color: var(--teal-light);
-            line-height: 1.6;
-            margin: 0;
-        }
-
-        /* Tip boxes */
-        .tip {
-            display: flex;
-            gap: 12px;
-            background: rgba(52, 211, 153, 0.06);
-            border: 1px solid rgba(52, 211, 153, 0.15);
-            border-radius: 12px;
-            padding: 16px 20px;
-            margin: 16px 0;
-            align-items: flex-start;
-        }
-
-        .tip-icon {
-            flex-shrink: 0;
-            width: 24px;
-            height: 24px;
-            background: rgba(52, 211, 153, 0.15);
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-            margin-top: 2px;
-        }
-
-        .tip p {
-            font-size: 0.88rem;
-            color: var(--success);
-            margin: 0;
-        }
-
-        .tip strong { color: #6ee7b7; }
-
-        /* Warning */
-        .warning {
-            display: flex;
-            gap: 12px;
-            background: rgba(251, 191, 36, 0.06);
-            border: 1px solid rgba(251, 191, 36, 0.15);
-            border-radius: 12px;
-            padding: 16px 20px;
-            margin: 16px 0;
-            align-items: flex-start;
-        }
-
-        .warning-icon {
-            flex-shrink: 0;
-            width: 24px;
-            height: 24px;
-            background: rgba(251, 191, 36, 0.15);
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-            margin-top: 2px;
-        }
-
-        .warning p {
-            font-size: 0.88rem;
-            color: var(--warning);
-            margin: 0;
-        }
-
-        /* Sample questions grid */
-        .question-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin: 16px 0;
-        }
-
-        @media (max-width: 600px) {
-            .question-grid { grid-template-columns: 1fr; }
-        }
-
-        .question-card {
-            background: var(--navy-mid);
-            border: 1px solid var(--navy-light);
-            border-radius: 10px;
-            padding: 16px;
-        }
-
-        .question-card .discipline {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--coral);
-            font-weight: 600;
-            margin-bottom: 6px;
-        }
-
-        .question-card p {
-            font-size: 0.88rem;
-            color: var(--gray-light);
-            margin: 0;
-            font-style: italic;
-        }
-
-        /* Checklist section */
-        .checklist {
-            background: linear-gradient(135deg, rgba(124, 58, 237, 0.06), rgba(124, 58, 237, 0.02));
-            border: 1px solid rgba(124, 58, 237, 0.15);
-            border-radius: 16px;
-            padding: 28px 32px;
-            margin: 48px 0;
-        }
-
-        .checklist h2 {
-            font-family: 'Fraunces', serif;
-            font-size: 1.3rem;
-            margin-bottom: 16px;
-        }
-
-        .check-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(124, 58, 237, 0.08);
-        }
-
-        .check-item:last-child { border-bottom: none; }
-
-        .check-box {
-            flex-shrink: 0;
-            width: 22px;
-            height: 22px;
-            border: 2px solid var(--purple-light);
-            border-radius: 6px;
-            margin-top: 2px;
-        }
-
-        .check-item p {
-            font-size: 0.92rem;
-            color: var(--gray-light);
-            margin: 0;
-        }
-
-        .check-item strong { color: var(--white); }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 48px 0 60px;
-            border-top: 1px solid var(--navy-light);
-            margin-top: 60px;
-        }
-
-        footer .brand {
-            font-family: 'Fraunces', serif;
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-
-        footer p {
-            font-size: 0.85rem;
-            color: var(--gray);
-        }
-
-        footer a {
-            color: var(--purple-light);
-            text-decoration: none;
-        }
-
-        footer a:hover { text-decoration: underline; }
-
-        /* Print */
-        @media print {
-            body { background: white; color: #1a1a1a; }
-            body::before { display: none; }
-            .step-number { background: #7c3aed; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
-            .prompt-box { border-left-color: #0891b2; }
-        }
-    </style>
+  @media (max-width: 640px) {
+    .site-header { padding: 1.5rem 1rem; }
+    .main-content { padding: 1.5rem 1rem 3rem; }
+    .step-card { padding: 1.25rem 1.25rem; }
+  }
+</style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <div class="badge">The Authenticity Lab</div>
-            <h1>Crafting the Source-Locked Inquiry</h1>
-            <p class="subtitle">A step-by-step guide to using NotebookLM for reading accountability that AI can't fake.</p>
-            <div class="tool-tag">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
-                NotebookLM by Google
-            </div>
-        </header>
 
-        <div class="why-box">
-            <h2>Why Source-Locked?</h2>
-            <p>NotebookLM is fundamentally different from ChatGPT or Gemini. It <strong>only references materials you upload</strong> — no outside training data, no hallucinated sources, no internet access. When a student asks it a question, the answer comes exclusively from your assigned readings. That's what makes it the <strong>reading accountability layer</strong> of an un-googlable assignment.</p>
-        </div>
+<header class="site-header" role="banner">
+  <div class="header-inner">
+    <div class="brand-tag">LearnAIID LLC — The Authenticity Lab</div>
+    <h1>Crafting the Source-Locked Inquiry</h1>
+    <p class="subtitle">A step-by-step guide to using NotebookLM for reading accountability that AI can't fake.</p>
+  </div>
+</header>
 
-        <!-- STEP 1 -->
-        <div class="step">
-            <div class="step-number">1</div>
-            <h3>Create Your Notebook</h3>
-            <div class="step-time">Setup — 5 minutes</div>
-            <p>Each assignment gets its own notebook. Think of it as a sealed container — only the sources you put in can be referenced.</p>
+<main class="main-content" role="main">
 
-            <div class="instruction-card">
-                <h4>Do This</h4>
-                <ol>
-                    <li>Go to <strong>notebooklm.google.com</strong> and sign in with your Google account</li>
-                    <li>Click <strong>"New Notebook"</strong></li>
-                    <li>Name it clearly (e.g., "ENG 111 — Social Justice Readings — Fall 2026")</li>
-                    <li>Upload your assigned readings as sources — PDFs, Google Docs, web links, or YouTube videos all work</li>
-                    <li>Wait for NotebookLM to process each source (you'll see a checkmark when ready)</li>
-                </ol>
-            </div>
+  <div class="intro-card">
+    <p><strong>Why source-locked?</strong> NotebookLM is fundamentally different from ChatGPT or Gemini. It only references materials you upload — no outside training data, no hallucinated sources, no internet access. When a student asks it a question, the answer comes exclusively from your assigned readings. That's what makes it the reading accountability layer of an un-googlable assignment.</p>
+    <p style="margin-top: 0.75rem;">This guide covers the three tools featured in The Authenticity Lab and works with any LMS.</p>
+  </div>
 
-            <div class="tip">
-                <div class="tip-icon">✓</div>
-                <p><strong>Pro tip:</strong> Upload 3–5 sources maximum per notebook. Too many sources dilute the specificity of student responses and make it harder to verify engagement.</p>
-            </div>
-        </div>
+  <!-- STEP 1 -->
+  <div class="step-card" data-step="Step 1">
+    <h3>Create Your Notebook</h3>
+    <p>Each assignment gets its own notebook. Think of it as a sealed container — only the sources you put in can be referenced.</p>
 
-        <!-- STEP 2 -->
-        <div class="step">
-            <div class="step-number">2</div>
-            <h3>Design Source-Locked Questions</h3>
-            <div class="step-time">The critical design move — 15 minutes</div>
-            <p>This is where un-googlable happens. Your questions must require engagement with the <em>specific</em> content of your uploaded materials — not general knowledge about the topic.</p>
+    <ol class="step-list">
+      <li>Go to <strong>notebooklm.google.com</strong> and sign in with your Google account</li>
+      <li>Click <strong>"New Notebook"</strong></li>
+      <li>Name it clearly (e.g., "ENG 111 — Social Justice Readings — Fall 2026")</li>
+      <li>Upload your assigned readings as sources — PDFs, Google Docs, web links, or YouTube videos all work</li>
+      <li>Wait for NotebookLM to process each source (you'll see a checkmark when ready)</li>
+    </ol>
 
-            <div class="instruction-card">
-                <h4>Question Design Framework</h4>
-                <ul>
-                    <li><strong>Require specific evidence:</strong> "According to [Author], what are the three factors that..." forces citation from the actual reading</li>
-                    <li><strong>Ask for cross-source synthesis:</strong> "How does [Source A]'s argument about X contrast with [Source B]'s position?"</li>
-                    <li><strong>Demand analysis, not summary:</strong> "What assumption does [Author] make in paragraph 3 that a critic might challenge?"</li>
-                    <li><strong>Include page/section references:</strong> "In the section on [topic], the author makes a surprising claim. Identify it and explain why it matters."</li>
-                </ul>
-            </div>
-
-            <div class="question-grid">
-                <div class="question-card">
-                    <div class="discipline">English Composition</div>
-                    <p>"How does Smith's use of personal narrative in Source 2 strengthen or weaken the statistical argument in Source 1?"</p>
-                </div>
-                <div class="question-card">
-                    <div class="discipline">Psychology</div>
-                    <p>"Source 3 cites a 2019 replication study. Does this support or challenge the framework presented in Source 1? Use specific data points."</p>
-                </div>
-                <div class="question-card">
-                    <div class="discipline">History</div>
-                    <p>"The primary source document contradicts the textbook account on two key points. Identify both and explain the significance."</p>
-                </div>
-                <div class="question-card">
-                    <div class="discipline">Business</div>
-                    <p>"Using only the case study data, build an argument for why the company's strategy failed. What does the financial data in Table 3 reveal that the narrative section omits?"</p>
-                </div>
-            </div>
-
-            <div class="warning">
-                <div class="warning-icon">!</div>
-                <p><strong>Avoid this:</strong> Generic questions like "What are the main themes of this article?" — these can be answered by any AI with a summary of the topic. Your questions should be impossible to answer without reading YOUR specific sources.</p>
-            </div>
-        </div>
-
-        <!-- STEP 3 -->
-        <div class="step">
-            <div class="step-number">3</div>
-            <h3>Test Your Questions Against the Notebook</h3>
-            <div class="step-time">Quality check — 10 minutes</div>
-            <p>Before assigning, run your own questions through the notebook. This is your stress test.</p>
-
-            <div class="instruction-card">
-                <h4>Do This</h4>
-                <ol>
-                    <li>Type each question into the NotebookLM chat</li>
-                    <li>Check that the AI <strong>cites specific passages</strong> from your sources (you'll see numbered citations)</li>
-                    <li>Verify the answers require genuine engagement — if the response is too generic, sharpen the question</li>
-                    <li>Try asking a question that <em>isn't</em> covered by your sources — NotebookLM should say it can't find relevant information. That's the source-lock working.</li>
-                </ol>
-            </div>
-
-            <div class="prompt-box">
-                <p>Test prompt: "What does the research say about [topic NOT in your sources]?"</p>
-            </div>
-
-            <div class="tip">
-                <div class="tip-icon">✓</div>
-                <p><strong>What you want to see:</strong> NotebookLM responds with "I don't have information about that in the provided sources." That confirms the source lock is working — your students can't get outside help from this tool.</p>
-            </div>
-        </div>
-
-        <!-- STEP 4 -->
-        <div class="step">
-            <div class="step-number">4</div>
-            <h3>Share the Notebook with Students</h3>
-            <div class="step-time">Distribution — 5 minutes</div>
-            <p>Students interact with the same notebook you built — same sources, same constraints.</p>
-
-            <div class="instruction-card">
-                <h4>Two Sharing Options</h4>
-                <ol>
-                    <li><strong>Option A — Shared notebook (recommended):</strong> Click "Share" in the top-right corner and set to "Anyone with the link can view." Students open the notebook, ask questions, and interact with your sources directly.</li>
-                    <li><strong>Option B — Student-created notebooks:</strong> Provide students with the source files and have them create their own notebooks. This adds a setup step but gives you proof they uploaded the correct materials.</li>
-                </ol>
-            </div>
-
-            <div class="warning">
-                <div class="warning-icon">!</div>
-                <p><strong>Workspace note:</strong> If your institution uses Google Workspace, sharing settings may be restricted to your domain. Test the share link from a non-institutional account or have students use personal Google accounts if needed.</p>
-            </div>
-        </div>
-
-        <!-- STEP 5 -->
-        <div class="step">
-            <div class="step-number">5</div>
-            <h3>Define the Submission Requirement</h3>
-            <div class="step-time">Assignment instructions — 5 minutes</div>
-            <p>The notebook link IS the evidence. Students submit it alongside their final work.</p>
-
-            <div class="instruction-card">
-                <h4>What Students Submit</h4>
-                <ol>
-                    <li><strong>The notebook share link</strong> — showing their conversation with the source-locked AI</li>
-                    <li><strong>A minimum interaction threshold</strong> — e.g., "at least 8 exchanges with the notebook demonstrating engagement with all assigned sources"</li>
-                    <li><strong>Source citation verification</strong> — students must confirm that NotebookLM's citations match the actual readings</li>
-                </ol>
-            </div>
-
-            <div class="prompt-box">
-                <p>Assignment language: "Submit your NotebookLM conversation link showing a minimum of 8 substantive exchanges with the assigned readings. Your conversation should demonstrate that you engaged with all three sources and can identify connections between them."</p>
-            </div>
-
-            <div class="tip">
-                <div class="tip-icon">✓</div>
-                <p><strong>Backup option:</strong> If sharing links isn't possible, students can export their conversation as a PDF (File → Print → Save as PDF). This always works regardless of platform restrictions.</p>
-            </div>
-        </div>
-
-        <!-- STEP 6 -->
-        <div class="step">
-            <div class="step-number">6</div>
-            <h3>Grade the Inquiry, Not Just the Answer</h3>
-            <div class="step-time">Assessment shift</div>
-            <p>When reviewing notebook conversations, look for evidence of thinking — not just correct answers.</p>
-
-            <div class="instruction-card">
-                <h4>What to Look For</h4>
-                <ul>
-                    <li><strong>Question sophistication:</strong> Did the student ask follow-up questions that pushed deeper, or just accept the first answer?</li>
-                    <li><strong>Cross-source connections:</strong> Did they ask the AI to compare or contrast different readings?</li>
-                    <li><strong>Critical evaluation:</strong> Did they challenge an AI response or ask for clarification when something seemed incomplete?</li>
-                    <li><strong>Source coverage:</strong> Did they engage with all assigned materials, or just the easiest one?</li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- QUICK START CHECKLIST -->
-        <div class="checklist">
-            <h2>Quick-Start Checklist</h2>
-            <div class="check-item">
-                <div class="check-box"></div>
-                <p><strong>Create notebook</strong> at notebooklm.google.com with a clear, assignment-specific name</p>
-            </div>
-            <div class="check-item">
-                <div class="check-box"></div>
-                <p><strong>Upload 3–5 sources</strong> (PDFs, Docs, links, or YouTube) and wait for processing</p>
-            </div>
-            <div class="check-item">
-                <div class="check-box"></div>
-                <p><strong>Write source-locked questions</strong> that require specific evidence from your materials</p>
-            </div>
-            <div class="check-item">
-                <div class="check-box"></div>
-                <p><strong>Stress-test your questions</strong> by running them through the notebook yourself</p>
-            </div>
-            <div class="check-item">
-                <div class="check-box"></div>
-                <p><strong>Test the source lock</strong> — ask about something NOT in the sources and confirm it can't answer</p>
-            </div>
-            <div class="check-item">
-                <div class="check-box"></div>
-                <p><strong>Configure sharing</strong> and test the link from a different account</p>
-            </div>
-            <div class="check-item">
-                <div class="check-box"></div>
-                <p><strong>Write assignment instructions</strong> specifying the notebook link submission + minimum interactions</p>
-            </div>
-            <div class="check-item">
-                <div class="check-box"></div>
-                <p><strong>Set grading criteria</strong> that reward inquiry depth, not just correct answers</p>
-            </div>
-        </div>
-
-        <footer>
-            <p class="brand">LearnAIID LLC</p>
-            <p>Developed by Page Durham · <a href="mailto:learnaiid.pd@gmail.com">learnaiid.pd@gmail.com</a></p>
-            <p style="margin-top: 8px;">From <em>The Authenticity Lab</em> workshop series · Free to use and adapt with attribution</p>
-        </footer>
+    <div class="tip-box">
+      <p><strong>Pro tip:</strong> Upload 3–5 sources maximum per notebook. Too many sources dilute the specificity of student responses and make it harder to verify engagement.</p>
     </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="step-card" data-step="Step 2">
+    <h3>Design Source-Locked Questions</h3>
+    <p>This is where un-googlable happens. Your questions must require engagement with the <em>specific</em> content of your uploaded materials — not general knowledge about the topic.</p>
+
+    <ul class="detail-list">
+      <li><strong>Require specific evidence:</strong> "According to [Author], what are the three factors that..." forces citation from the actual reading</li>
+      <li><strong>Ask for cross-source synthesis:</strong> "How does [Source A]'s argument about X contrast with [Source B]'s position?"</li>
+      <li><strong>Demand analysis, not summary:</strong> "What assumption does [Author] make in paragraph 3 that a critic might challenge?"</li>
+      <li><strong>Include page/section references:</strong> "In the section on [topic], the author makes a surprising claim. Identify it and explain why it matters."</li>
+    </ul>
+
+    <div class="example-grid">
+      <div class="example-card">
+        <div class="discipline">English Composition</div>
+        <p>"How does Smith's use of personal narrative in Source 2 strengthen or weaken the statistical argument in Source 1?"</p>
+      </div>
+      <div class="example-card">
+        <div class="discipline">Psychology</div>
+        <p>"Source 3 cites a 2019 replication study. Does this support or challenge the framework presented in Source 1? Use specific data points."</p>
+      </div>
+      <div class="example-card">
+        <div class="discipline">History</div>
+        <p>"The primary source document contradicts the textbook account on two key points. Identify both and explain the significance."</p>
+      </div>
+      <div class="example-card">
+        <div class="discipline">Business</div>
+        <p>"Using only the case study data, build an argument for why the company's strategy failed. What does the financial data in Table 3 reveal that the narrative section omits?"</p>
+      </div>
+    </div>
+
+    <div class="warning-box">
+      <p><strong>Avoid this:</strong> Generic questions like "What are the main themes of this article?" — these can be answered by any AI with a summary of the topic. Your questions should be impossible to answer without reading YOUR specific sources.</p>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="step-card" data-step="Step 3">
+    <h3>Test Your Questions Against the Notebook</h3>
+    <p>Before assigning, run your own questions through the notebook. This is your stress test.</p>
+
+    <ol class="step-list">
+      <li>Type each question into the NotebookLM chat</li>
+      <li>Check that the AI <strong>cites specific passages</strong> from your sources (you'll see numbered citations)</li>
+      <li>Verify the answers require genuine engagement — if the response is too generic, sharpen the question</li>
+      <li>Try asking a question that <em>isn't</em> covered by your sources — NotebookLM should say it can't find relevant information. That's the source-lock working.</li>
+    </ol>
+
+    <div class="prompt-box">
+      <div class="prompt-label">Test Prompt</div>
+      <p>Test prompt: "What does the research say about [topic NOT in your sources]?"</p>
+    </div>
+
+    <div class="tip-box">
+      <p><strong>What you want to see:</strong> NotebookLM responds with "I don't have information about that in the provided sources." That confirms the source lock is working — your students can't get outside help from this tool.</p>
+    </div>
+  </div>
+
+  <!-- STEP 4 -->
+  <div class="step-card" data-step="Step 4">
+    <h3>Share the Notebook with Students</h3>
+    <p>Students interact with the same notebook you built — same sources, same constraints.</p>
+
+    <ul class="detail-list">
+      <li><strong>Option A — Shared notebook (recommended):</strong> Click "Share" in the top-right corner and set to "Anyone with the link can view." Students open the notebook, ask questions, and interact with your sources directly.</li>
+      <li><strong>Option B — Student-created notebooks:</strong> Provide students with the source files and have them create their own notebooks. This adds a setup step but gives you proof they uploaded the correct materials.</li>
+    </ul>
+
+    <div class="warning-box">
+      <p><strong>Workspace note:</strong> If your institution uses Google Workspace, sharing settings may be restricted to your domain. Test the share link from a non-institutional account or have students use personal Google accounts if needed.</p>
+    </div>
+  </div>
+
+  <!-- STEP 5 -->
+  <div class="step-card" data-step="Step 5">
+    <h3>Define the Submission Requirement</h3>
+    <p>The notebook conversation IS the evidence. Students submit it alongside their final work.</p>
+
+    <ul class="detail-list">
+      <li><strong>The notebook share link</strong> — showing their conversation with the source-locked AI</li>
+      <li><strong>A minimum interaction threshold</strong> — e.g., "at least 8 exchanges with the notebook demonstrating engagement with all assigned sources"</li>
+      <li><strong>Source citation verification</strong> — students must confirm that NotebookLM's citations match the actual readings</li>
+    </ul>
+
+    <div class="prompt-box">
+      <div class="prompt-label">Assignment Language</div>
+      <p>"Submit your NotebookLM conversation link showing a minimum of 8 substantive exchanges with the assigned readings. Your conversation should demonstrate that you engaged with all three sources and can identify connections between them."</p>
+    </div>
+
+    <div class="tip-box">
+      <p><strong>Backup option:</strong> If sharing links isn't possible, students can export their conversation as a PDF (File → Print → Save as PDF). This always works regardless of platform restrictions.</p>
+    </div>
+  </div>
+
+  <!-- STEP 6 -->
+  <div class="step-card" data-step="Step 6">
+    <h3>Grade the Inquiry, Not Just the Answer</h3>
+    <p>When reviewing notebook conversations, look for evidence of thinking — not just correct answers.</p>
+
+    <ul class="detail-list">
+      <li><strong>Question sophistication:</strong> Did the student ask follow-up questions that pushed deeper, or just accept the first answer?</li>
+      <li><strong>Cross-source connections:</strong> Did they ask the AI to compare or contrast different readings?</li>
+      <li><strong>Critical evaluation:</strong> Did they challenge an AI response or ask for clarification when something seemed incomplete?</li>
+      <li><strong>Source coverage:</strong> Did they engage with all assigned materials, or just the easiest one?</li>
+    </ul>
+  </div>
+
+  <hr class="divider">
+
+  <!-- CHECKLIST -->
+  <section class="checklist-section" aria-labelledby="checklist-heading">
+    <div class="checklist-header">
+      <h2 id="checklist-heading">Quick-Start Checklist</h2>
+    </div>
+    <div class="checklist-body">
+      <ul class="checklist">
+        <li><strong>Create notebook</strong> at notebooklm.google.com with a clear, assignment-specific name</li>
+        <li><strong>Upload 3–5 sources</strong> (PDFs, Docs, links, or YouTube) and wait for processing</li>
+        <li><strong>Write source-locked questions</strong> that require specific evidence from your materials</li>
+        <li><strong>Stress-test your questions</strong> by running them through the notebook yourself</li>
+        <li><strong>Test the source lock</strong> — ask about something NOT in the sources and confirm it can't answer</li>
+        <li><strong>Configure sharing</strong> and test the link from a different account</li>
+        <li><strong>Write assignment instructions</strong> specifying the notebook link submission + minimum interactions</li>
+        <li><strong>Set grading criteria</strong> that reward inquiry depth, not just correct answers</li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer" role="contentinfo">
+  <p><strong>LearnAIID LLC</strong> — AI Consulting for Education, Accessibility &amp; Instructional Design</p>
+  <p>The Authenticity Lab: Crafting "Un-Googlable" Tasks &bull; <a href="https://learnaiid.com">learnaiid.com</a></p>
+  <p style="margin-top: 0.5rem;">&copy; 2025 LearnAIID LLC. Licensed for educational use with attribution.</p>
+</footer>
+
 </body>
 </html>
