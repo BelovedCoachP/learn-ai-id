@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crafting the Process-Oriented Rubric | The Authenticity Lab</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700&family=JetBrains+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,700;1,9..144,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #0f172a;
+            --navy-mid: #1e293b;
+            --navy-light: #334155;
+            --purple: #7c3aed;
+            --purple-light: #a78bfa;
+            --purple-glow: rgba(124, 58, 237, 0.15);
+            --teal: #06b6d4;
+            --teal-light: #22d3ee;
+            --coral: #f472b6;
+            --white: #f8fafc;
+            --gray: #94a3b8;
+            --gray-light: #cbd5e1;
+            --success: #34d399;
+            --warning: #fbbf24;
+            --orange: #fb923c;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--navy);
+            color: var(--white);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: 
+                linear-gradient(rgba(124, 58, 237, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(124, 58, 237, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 880px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* HEADER */
+        header {
+            padding: 60px 0 40px;
+            text-align: center;
+        }
+
+        .badge {
+            display: inline-block;
+            background: var(--purple-glow);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            color: var(--purple-light);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 6px 16px;
+            border-radius: 100px;
+            margin-bottom: 24px;
+        }
+
+        h1 {
+            font-family: 'Fraunces', serif;
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, var(--white) 0%, var(--purple-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.15rem;
+            color: var(--gray);
+            max-width: 640px;
+            margin: 0 auto 32px;
+        }
+
+        .stat-bar {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--navy-mid);
+            border: 1px solid var(--navy-light);
+            padding: 10px 24px;
+            border-radius: 100px;
+            font-size: 0.9rem;
+        }
+
+        .stat-bar .highlight-num {
+            color: var(--teal-light);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .stat-bar span { color: var(--gray-light); }
+
+        /* PHILOSOPHY BOX */
+        .philosophy-box {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(6, 182, 212, 0.06));
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            border-radius: 16px;
+            padding: 32px;
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        .philosophy-box blockquote {
+            font-family: 'Fraunces', serif;
+            font-size: 1.4rem;
+            font-style: italic;
+            color: var(--white);
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        .philosophy-box cite {
+            font-style: normal;
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+
+        /* SECTION HEADINGS */
+        .section-heading {
+            font-family: 'Fraunces', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin: 56px 0 8px;
+        }
+
+        .section-sub {
+            color: var(--gray);
+            font-size: 1rem;
+            margin-bottom: 32px;
+        }
+
+        /* RUBRIC GRID */
+        .rubric-criteria {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin: 24px 0;
+        }
+
+        .criterion {
+            background: var(--navy-mid);
+            border: 1px solid var(--navy-light);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: border-color 0.3s;
+        }
+
+        .criterion:hover { border-color: var(--purple); }
+
+        .criterion-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 24px;
+            cursor: pointer;
+        }
+
+        .criterion-header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .criterion-weight {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Fraunces', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--white);
+            flex-shrink: 0;
+        }
+
+        .weight-25 { background: var(--purple); }
+        .weight-20 { background: #6366f1; }
+        .weight-15 { background: var(--teal); }
+
+        .criterion-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .criterion-subtitle {
+            font-size: 0.82rem;
+            color: var(--gray);
+            margin-top: 2px;
+        }
+
+        .expand-icon {
+            color: var(--gray);
+            font-size: 1.2rem;
+            transition: transform 0.3s;
+        }
+
+        .criterion.open .expand-icon { transform: rotate(180deg); }
+
+        .criterion-body {
+            display: none;
+            padding: 0 24px 24px;
+        }
+
+        .criterion.open .criterion-body { display: block; }
+
+        /* Performance levels */
+        .performance-levels {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        @media (max-width: 700px) {
+            .performance-levels { grid-template-columns: 1fr 1fr; }
+        }
+
+        .perf-level {
+            border-radius: 10px;
+            padding: 14px 16px;
+            font-size: 0.82rem;
+            line-height: 1.5;
+        }
+
+        .perf-level .level-label {
+            font-weight: 700;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 6px;
+        }
+
+        .perf-exemplary {
+            background: rgba(52, 211, 153, 0.08);
+            border: 1px solid rgba(52, 211, 153, 0.15);
+            color: #6ee7b7;
+        }
+        .perf-exemplary .level-label { color: var(--success); }
+
+        .perf-proficient {
+            background: rgba(6, 182, 212, 0.08);
+            border: 1px solid rgba(6, 182, 212, 0.15);
+            color: #67e8f9;
+        }
+        .perf-proficient .level-label { color: var(--teal-light); }
+
+        .perf-developing {
+            background: rgba(251, 191, 36, 0.08);
+            border: 1px solid rgba(251, 191, 36, 0.15);
+            color: #fde68a;
+        }
+        .perf-developing .level-label { color: var(--warning); }
+
+        .perf-beginning {
+            background: rgba(251, 113, 133, 0.08);
+            border: 1px solid rgba(251, 113, 133, 0.15);
+            color: #fda4af;
+        }
+        .perf-beginning .level-label { color: #fb7185; }
+
+        /* STEP SECTIONS */
+        .how-to-section {
+            margin: 48px 0;
+        }
+
+        h2 {
+            font-family: 'Fraunces', serif;
+            font-size: 1.35rem;
+            margin-bottom: 16px;
+        }
+
+        .step-card {
+            background: var(--navy-mid);
+            border: 1px solid var(--navy-light);
+            border-radius: 14px;
+            padding: 24px 28px;
+            margin: 16px 0;
+        }
+
+        .step-card h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .step-num-small {
+            background: var(--purple);
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .step-card p, .step-card li {
+            color: var(--gray-light);
+            font-size: 0.92rem;
+        }
+
+        .step-card ul, .step-card ol {
+            padding-left: 20px;
+            margin-top: 8px;
+        }
+
+        .step-card li { margin-bottom: 6px; }
+        .step-card li strong { color: var(--white); }
+
+        /* Callout */
+        .callout {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.08), rgba(6, 182, 212, 0.06));
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            border-radius: 14px;
+            padding: 24px 28px;
+            margin: 24px 0;
+        }
+
+        .callout h3 {
+            font-size: 0.95rem;
+            color: var(--purple-light);
+            margin-bottom: 8px;
+        }
+
+        .callout p {
+            font-size: 0.92rem;
+            color: var(--gray-light);
+        }
+
+        .callout strong { color: var(--white); }
+
+        /* Prompt box */
+        .prompt-box {
+            background: var(--navy-mid);
+            border-left: 3px solid var(--teal);
+            border-radius: 0 12px 12px 0;
+            padding: 20px 24px;
+            margin: 16px 0;
+            position: relative;
+        }
+
+        .prompt-box::before {
+            content: 'SYLLABUS LANGUAGE';
+            position: absolute;
+            top: -10px;
+            left: 16px;
+            background: var(--navy);
+            padding: 0 8px;
+            font-size: 0.65rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--teal);
+            font-weight: 600;
+        }
+
+        .prompt-box p {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--teal-light);
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        /* Tip */
+        .tip {
+            display: flex;
+            gap: 12px;
+            background: rgba(52, 211, 153, 0.06);
+            border: 1px solid rgba(52, 211, 153, 0.15);
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin: 16px 0;
+        }
+
+        .tip-icon {
+            flex-shrink: 0;
+            width: 24px;
+            height: 24px;
+            background: rgba(52, 211, 153, 0.15);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            margin-top: 2px;
+        }
+
+        .tip p {
+            font-size: 0.88rem;
+            color: var(--success);
+            margin: 0;
+        }
+
+        .tip strong { color: #6ee7b7; }
+
+        /* Weight visual */
+        .weight-visual {
+            margin: 32px 0;
+        }
+
+        .weight-bar-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .weight-label {
+            width: 200px;
+            font-size: 0.82rem;
+            color: var(--gray-light);
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 600px) {
+            .weight-label { width: 120px; font-size: 0.75rem; }
+        }
+
+        .weight-bar {
+            height: 28px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 10px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.9);
+            transition: width 0.8s ease;
+        }
+
+        .weight-bar-cat {
+            font-size: 0.7rem;
+            color: var(--gray);
+            margin-left: 8px;
+            flex-shrink: 0;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 48px 0 60px;
+            border-top: 1px solid var(--navy-light);
+            margin-top: 60px;
+        }
+
+        footer .brand {
+            font-family: 'Fraunces', serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        footer p {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+
+        footer a {
+            color: var(--purple-light);
+            text-decoration: none;
+        }
+
+        footer a:hover { text-decoration: underline; }
+
+        @media print {
+            body { background: white; color: #1a1a1a; }
+            body::before { display: none; }
+            .criterion-body { display: block !important; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="badge">The Authenticity Lab</div>
+            <h1>Crafting the Process-Oriented Rubric</h1>
+            <p class="subtitle">Grade the journey, not the destination. A complete rubric framework for AI-integrated assessment.</p>
+            <div class="stat-bar">
+                <span class="highlight-num">50%</span>
+                <span>of the grade rewards HOW students think — not what they submit</span>
+            </div>
+        </header>
+
+        <div class="philosophy-box">
+            <blockquote>"Don't ask 'Did they use AI?' — ask 'How did they use it, and how well?'"</blockquote>
+            <cite>The key move from AI-resistant to AI-integrated assessment</cite>
+        </div>
+
+        <!-- THE FIVE CRITERIA -->
+        <h2 class="section-heading">The Five Criteria</h2>
+        <p class="section-sub">Click each criterion to see the full performance level descriptors.</p>
+
+        <div class="rubric-criteria">
+            <!-- Criterion 1 -->
+            <div class="criterion open" onclick="this.classList.toggle('open')">
+                <div class="criterion-header">
+                    <div class="criterion-header-left">
+                        <div class="criterion-weight weight-25">25%</div>
+                        <div>
+                            <div class="criterion-title">Prompt Quality & Iteration</div>
+                            <div class="criterion-subtitle">Did the student direct AI effectively and improve over rounds?</div>
+                        </div>
+                    </div>
+                    <span class="expand-icon">▼</span>
+                </div>
+                <div class="criterion-body">
+                    <div class="performance-levels">
+                        <div class="perf-level perf-exemplary">
+                            <div class="level-label">Exemplary</div>
+                            Prompts are specific, strategic, and evolve across 4+ rounds. Student clearly directs the AI toward deeper analysis with each iteration.
+                        </div>
+                        <div class="perf-level perf-proficient">
+                            <div class="level-label">Proficient</div>
+                            Prompts show intentional refinement across 3+ rounds. Student adjusts approach based on AI responses.
+                        </div>
+                        <div class="perf-level perf-developing">
+                            <div class="level-label">Developing</div>
+                            Some iteration present but prompts remain surface-level. Limited evidence of strategic refinement.
+                        </div>
+                        <div class="perf-level perf-beginning">
+                            <div class="level-label">Beginning</div>
+                            Single prompt with no follow-up. Student accepts first AI output without challenging or refining.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Criterion 2 -->
+            <div class="criterion" onclick="this.classList.toggle('open')">
+                <div class="criterion-header">
+                    <div class="criterion-header-left">
+                        <div class="criterion-weight weight-25">25%</div>
+                        <div>
+                            <div class="criterion-title">Human Synthesis & Original Thinking</div>
+                            <div class="criterion-subtitle">Did the student add something AI couldn't generate on its own?</div>
+                        </div>
+                    </div>
+                    <span class="expand-icon">▼</span>
+                </div>
+                <div class="criterion-body">
+                    <div class="performance-levels">
+                        <div class="perf-level perf-exemplary">
+                            <div class="level-label">Exemplary</div>
+                            Final work integrates AI-generated material with original analysis, personal insight, or novel connections. The human voice is unmistakable.
+                        </div>
+                        <div class="perf-level perf-proficient">
+                            <div class="level-label">Proficient</div>
+                            Student adds meaningful original commentary and clearly transforms AI output rather than copying it.
+                        </div>
+                        <div class="perf-level perf-developing">
+                            <div class="level-label">Developing</div>
+                            Some original thinking present but final work relies heavily on AI-generated language and structure.
+                        </div>
+                        <div class="perf-level perf-beginning">
+                            <div class="level-label">Beginning</div>
+                            Final submission is essentially unmodified AI output with no evidence of human synthesis or original thought.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Criterion 3 -->
+            <div class="criterion" onclick="this.classList.toggle('open')">
+                <div class="criterion-header">
+                    <div class="criterion-header-left">
+                        <div class="criterion-weight weight-20">20%</div>
+                        <div>
+                            <div class="criterion-title">Source Interrogation</div>
+                            <div class="criterion-subtitle">Did the student deeply engage with assigned sources through AI?</div>
+                        </div>
+                    </div>
+                    <span class="expand-icon">▼</span>
+                </div>
+                <div class="criterion-body">
+                    <div class="performance-levels">
+                        <div class="perf-level perf-exemplary">
+                            <div class="level-label">Exemplary</div>
+                            NotebookLM conversation shows sophisticated inquiry across all assigned sources. Student asks analytical questions that connect and compare materials.
+                        </div>
+                        <div class="perf-level perf-proficient">
+                            <div class="level-label">Proficient</div>
+                            Engagement with most assigned sources. Questions go beyond summary to analysis and comparison.
+                        </div>
+                        <div class="perf-level perf-developing">
+                            <div class="level-label">Developing</div>
+                            Engages with only 1–2 sources or asks primarily summary-level questions.
+                        </div>
+                        <div class="perf-level perf-beginning">
+                            <div class="level-label">Beginning</div>
+                            No NotebookLM conversation submitted, or conversation shows minimal engagement with sources.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Criterion 4 -->
+            <div class="criterion" onclick="this.classList.toggle('open')">
+                <div class="criterion-header">
+                    <div class="criterion-header-left">
+                        <div class="criterion-weight weight-15">15%</div>
+                        <div>
+                            <div class="criterion-title">Fact-Checking & Hallucination Detection</div>
+                            <div class="criterion-subtitle">Did the student verify AI claims against actual sources?</div>
+                        </div>
+                    </div>
+                    <span class="expand-icon">▼</span>
+                </div>
+                <div class="criterion-body">
+                    <div class="performance-levels">
+                        <div class="perf-level perf-exemplary">
+                            <div class="level-label">Exemplary</div>
+                            Student explicitly asks AI for source verification, identifies at least one hallucination or inaccuracy, and documents the correction process.
+                        </div>
+                        <div class="perf-level perf-proficient">
+                            <div class="level-label">Proficient</div>
+                            Student verifies key claims and demonstrates awareness of hallucination risk in their reflection.
+                        </div>
+                        <div class="perf-level perf-developing">
+                            <div class="level-label">Developing</div>
+                            Some verification attempted but student doesn't catch obvious errors or fabricated citations.
+                        </div>
+                        <div class="perf-level perf-beginning">
+                            <div class="level-label">Beginning</div>
+                            No evidence of fact-checking. Student accepts all AI output at face value.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Criterion 5 -->
+            <div class="criterion" onclick="this.classList.toggle('open')">
+                <div class="criterion-header">
+                    <div class="criterion-header-left">
+                        <div class="criterion-weight weight-15">15%</div>
+                        <div>
+                            <div class="criterion-title">Reflection & Metacognition</div>
+                            <div class="criterion-subtitle">Can the student articulate what they learned from the process?</div>
+                        </div>
+                    </div>
+                    <span class="expand-icon">▼</span>
+                </div>
+                <div class="criterion-body">
+                    <div class="performance-levels">
+                        <div class="perf-level perf-exemplary">
+                            <div class="level-label">Exemplary</div>
+                            Reflection demonstrates deep metacognitive awareness — student articulates how AI shaped, challenged, or redirected their thinking with specific examples.
+                        </div>
+                        <div class="perf-level perf-proficient">
+                            <div class="level-label">Proficient</div>
+                            Thoughtful reflection that connects the AI interaction to learning outcomes. Identifies specific moments of insight.
+                        </div>
+                        <div class="perf-level perf-developing">
+                            <div class="level-label">Developing</div>
+                            Reflection is generic ("AI was helpful") without specific examples or evidence of metacognitive processing.
+                        </div>
+                        <div class="perf-level perf-beginning">
+                            <div class="level-label">Beginning</div>
+                            No reflection submitted, or reflection is a single sentence with no substantive analysis.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- WEIGHT VISUALIZATION -->
+        <div class="weight-visual">
+            <h2 style="margin-bottom: 20px;">What This Signals to Students</h2>
+            <div class="weight-bar-row">
+                <div class="weight-label">Prompt Quality & Iteration</div>
+                <div class="weight-bar" style="width: 50%; background: var(--purple);">25%</div>
+                <span class="weight-bar-cat">PROCESS</span>
+            </div>
+            <div class="weight-bar-row">
+                <div class="weight-label">Human Synthesis</div>
+                <div class="weight-bar" style="width: 50%; background: var(--purple);">25%</div>
+                <span class="weight-bar-cat">PROCESS</span>
+            </div>
+            <div class="weight-bar-row">
+                <div class="weight-label">Source Interrogation</div>
+                <div class="weight-bar" style="width: 40%; background: #6366f1;">20%</div>
+                <span class="weight-bar-cat">EVIDENCE</span>
+            </div>
+            <div class="weight-bar-row">
+                <div class="weight-label">Fact-Checking</div>
+                <div class="weight-bar" style="width: 30%; background: var(--teal);">15%</div>
+                <span class="weight-bar-cat">VERIFICATION</span>
+            </div>
+            <div class="weight-bar-row">
+                <div class="weight-label">Reflection</div>
+                <div class="weight-bar" style="width: 30%; background: var(--teal);">15%</div>
+                <span class="weight-bar-cat">METACOGNITION</span>
+            </div>
+        </div>
+
+        <div class="callout">
+            <h3>Why This Weighting Matters</h3>
+            <p>Half the grade (50%) rewards <strong>how students think</strong> — prompting quality and original synthesis. AI cannot fake the iterative reasoning this rubric captures. A student who submits a polished final product but shows a shallow, single-prompt conversation will score lower than a student whose final work is rougher but whose process shows genuine intellectual engagement.</p>
+        </div>
+
+        <!-- HOW TO IMPLEMENT -->
+        <div class="how-to-section">
+            <h2 class="section-heading">How to Implement This Rubric</h2>
+            <p class="section-sub">Five steps from this page to your LMS.</p>
+
+            <div class="step-card">
+                <h3><span class="step-num-small">1</span> Adapt the Weights to Your Context</h3>
+                <p>These weights are a starting framework. Adjust based on your course goals:</p>
+                <ul>
+                    <li><strong>Writing-heavy courses:</strong> Increase Human Synthesis to 30%, reduce Reflection to 10%</li>
+                    <li><strong>Research methods:</strong> Increase Fact-Checking to 20-25%</li>
+                    <li><strong>First-year courses:</strong> Increase Reflection to 20% to build metacognitive habits early</li>
+                    <li><strong>STEM problem-solving:</strong> Reframe Source Interrogation as "Data Interrogation" and adjust language accordingly</li>
+                </ul>
+            </div>
+
+            <div class="step-card">
+                <h3><span class="step-num-small">2</span> Define Your Submission Requirements</h3>
+                <p>Students must submit three components for each assessed assignment:</p>
+                <ol>
+                    <li><strong>NotebookLM conversation link</strong> — evidence of source engagement (Source Interrogation criterion)</li>
+                    <li><strong>ChatGPT or Gemini conversation link</strong> — evidence of iterative prompting (Prompt Quality & Fact-Checking criteria)</li>
+                    <li><strong>Final deliverable + written reflection</strong> — the product plus metacognitive analysis (Human Synthesis & Reflection criteria)</li>
+                </ol>
+            </div>
+
+            <div class="step-card">
+                <h3><span class="step-num-small">3</span> Set Minimum Iteration Requirements</h3>
+                <p>Specify a minimum number of AI interaction rounds before submission is accepted:</p>
+                <ul>
+                    <li><strong>Minimum 4 rounds</strong> in ChatGPT/Gemini (aligns with the Socratic Loop: generate, challenge, steelman, verify)</li>
+                    <li><strong>Minimum 6-8 exchanges</strong> in NotebookLM (ensures engagement with all assigned sources)</li>
+                    <li>Conversations below the minimum threshold receive an automatic "Beginning" rating on Prompt Quality</li>
+                </ul>
+            </div>
+
+            <div class="step-card">
+                <h3><span class="step-num-small">4</span> Add the Rubric to Your LMS</h3>
+                <p>Translate the five criteria into your institution's rubric format:</p>
+                <ul>
+                    <li><strong>Canvas:</strong> Create a rubric with 5 criteria and 4 rating levels. Use "Free Form Comments" for qualitative feedback on each conversation link.</li>
+                    <li><strong>Blackboard:</strong> Use the Rubric tool with percentage-weighted criteria matching the weights above.</li>
+                    <li><strong>Brightspace/D2L:</strong> Build as a custom rubric and attach to the assignment submission folder.</li>
+                    <li><strong>Any LMS:</strong> The criteria and levels translate directly into any standard rubric format.</li>
+                </ul>
+            </div>
+
+            <div class="step-card">
+                <h3><span class="step-num-small">5</span> Add Syllabus Language</h3>
+                <p>Include this policy in your syllabus and assignment instructions:</p>
+            </div>
+
+            <div class="prompt-box">
+                <p>"Students are encouraged to use AI tools as part of their research and drafting process. All AI interactions must be documented and submitted as part of the assignment. Using AI without documenting it constitutes a violation of the course's academic integrity policy. Assignments will be graded using a process-oriented rubric that evaluates prompt quality, source engagement, fact-checking, original synthesis, and metacognitive reflection."</p>
+            </div>
+
+            <div class="tip">
+                <div class="tip-icon">✓</div>
+                <p><strong>Key framing for students:</strong> "Using AI without documenting it is the new plagiarism." This single sentence resets expectations. It tells students that AI use is welcome — hiding it is not.</p>
+            </div>
+        </div>
+
+        <!-- GRADING TIPS -->
+        <div class="how-to-section">
+            <h2 class="section-heading">Grading Efficiently</h2>
+            <p class="section-sub">This rubric is actually faster to grade than traditional essays. Here's how.</p>
+
+            <div class="callout">
+                <h3>The 2-Minute Scan</h3>
+                <p>Open the student's conversation links. Within 2 minutes you can tell:</p>
+                <ul style="margin-top: 8px; padding-left: 20px; color: var(--gray-light); font-size: 0.92rem;">
+                    <li><strong>Prompt Quality:</strong> Count the rounds. Read the first and last prompt. Did they evolve?</li>
+                    <li><strong>Source Interrogation:</strong> Scan NotebookLM — did they touch all sources? Any cross-referencing?</li>
+                    <li><strong>Fact-Checking:</strong> Look for the verification prompt. Did they ask for sources/DOIs?</li>
+                    <li><strong>Human Synthesis:</strong> Compare the conversation to the final submission. What did they change?</li>
+                    <li><strong>Reflection:</strong> Read the reflection. Does it reference specific moments from the conversation?</li>
+                </ul>
+            </div>
+        </div>
+
+        <footer>
+            <p class="brand">LearnAIID LLC</p>
+            <p>Developed by Page Durham · <a href="mailto:learnaiid.pd@gmail.com">learnaiid.pd@gmail.com</a></p>
+            <p style="margin-top: 8px;">From <em>The Authenticity Lab</em> workshop series · Free to use and adapt with attribution</p>
+        </footer>
+    </div>
+</body>
+</html>
