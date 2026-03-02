@@ -1,476 +1,510 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Authenticity Lab — Resources | LearnAIID LLC</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=Outfit:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-<style>
-:root {
-  /* === Lovable Design Tokens (exact match) === */
-  --background: #FFFFFF;
-  --foreground: #020817;
-  --primary: #0F172A;
-  --primary-foreground: #F8FAFC;
-  --secondary: #F1F5F9;
-  --muted: #F1F5F9;
-  --muted-foreground: #64748B;
-  --border: #E2E8F0;
-  --destructive: #EF4444;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Authenticity Lab — Resources | LearnAIID LLC</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;1,9..144,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #0f172a;
+            --navy-mid: #1e293b;
+            --purple: #7c3aed;
+            --purple-light: #a78bfa;
+            --purple-dark: #5b21b6;
+            --teal: #06b6d4;
+            --pink: #ec4899;
+            --white: #ffffff;
+            --off-white: #f1f5f9;
+            --bg: #f8fafc;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+        }
 
-  /* Brand / Glow */
-  --brand-blue: #0080FF;
-  --brand-purple: #9945FF;
-  --brand-pink: #E54D9E;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-  /* Button */
-  --btn-blue: #2563EB;
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
 
-  /* Typography */
-  --font-display: 'Playfair Display', Georgia, serif;
-  --font-body: 'Outfit', system-ui, sans-serif;
-  --font-mono: 'Fira Code', monospace;
+        /* ===== HERO HEADER ===== */
+        .hero {
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 40%, #312e81 70%, #4c1d95 100%);
+            padding: 64px 24px 72px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
 
-  /* Shared */
-  --radius: 12px;
-  --shadow-card: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
-  --shadow-hover: 0 4px 24px rgba(0,0,0,0.1);
-}
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, var(--teal), var(--purple), var(--pink));
+        }
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+        .hero-nav {
+            max-width: 960px;
+            margin: 0 auto 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-body {
-  font-family: var(--font-body);
-  background: var(--background);
-  color: var(--foreground);
-  min-height: 100vh;
-  -webkit-font-smoothing: antialiased;
-}
+        .hero-brand {
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
+        }
 
-/* --- LAYOUT --- */
-.page { position: relative; }
-.container { max-width: 920px; margin: 0 auto; padding: 0 1.5rem; }
+        .hero-tag {
+            font-size: 0.72rem;
+            color: rgba(255,255,255,0.5);
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 4px 12px;
+            border-radius: 100px;
+        }
 
-/* --- HERO (dark gradient matching Lovable header) --- */
-.hero {
-  background: linear-gradient(135deg, var(--primary) 0%, #1e1045 50%, #0c1a3a 100%);
-  padding: 3.5rem 0 3rem;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-.hero::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 50% 60% at 20% 80%, rgba(153,69,255,0.15) 0%, transparent 70%),
-    radial-gradient(ellipse 40% 50% at 80% 20%, rgba(0,128,255,0.12) 0%, transparent 70%);
-  pointer-events: none;
-}
-.hero::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, var(--brand-blue), var(--brand-purple), var(--brand-pink));
-}
-.hero > .container { position: relative; z-index: 1; }
+        .hero h1 {
+            font-family: 'Fraunces', serif;
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            color: white;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
 
-.hero-eyebrow {
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--brand-pink);
-  margin-bottom: 1rem;
-  display: block;
-}
-.hero h1 {
-  font-family: var(--font-display);
-  font-size: clamp(2rem, 5vw, 3rem);
-  font-weight: 800;
-  line-height: 1.1;
-  color: white;
-  margin-bottom: 0.75rem;
-}
-.hero h1 .accent {
-  background: linear-gradient(135deg, var(--brand-purple), var(--brand-pink));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.hero .subtitle {
-  font-size: 1.05rem;
-  color: rgba(255,255,255,0.7);
-  font-weight: 300;
-  max-width: 560px;
-  margin: 0 auto;
-  line-height: 1.6;
-}
-.hero-divider {
-  width: 60px;
-  height: 3px;
-  background: linear-gradient(90deg, var(--brand-blue), var(--brand-purple));
-  margin: 2rem auto 0;
-  border-radius: 3px;
-}
+        .hero h1 em {
+            font-style: italic;
+            background: linear-gradient(135deg, var(--purple-light), var(--pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
 
-/* --- RESOURCE CARDS SECTION --- */
-.resources-section {
-  padding: 3rem 0;
-  background: var(--secondary);
-}
-.section-heading {
-  text-align: center;
-  margin-bottom: 2rem;
-}
-.section-heading h2 {
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--foreground);
-  margin-bottom: 0.4rem;
-}
-.section-heading p {
-  font-size: 0.9rem;
-  color: var(--muted-foreground);
-}
-.resources-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.25rem;
-}
-@media (min-width: 700px) {
-  .resources-grid { grid-template-columns: 1fr 1fr 1fr; }
-}
+        .hero p {
+            color: rgba(255,255,255,0.7);
+            font-size: 1rem;
+            max-width: 580px;
+            margin: 0 auto;
+        }
 
-.resource-card {
-  background: var(--background);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 1.75rem 1.5rem;
-  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  box-shadow: var(--shadow-card);
-}
-.resource-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--brand-blue), var(--brand-purple));
-  opacity: 0;
-  transition: opacity 0.35s;
-}
-.resource-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-hover);
-  border-color: rgba(37,99,235,0.25);
-}
-.resource-card:hover::before { opacity: 1; }
+        .hero-divider {
+            width: 48px;
+            height: 3px;
+            background: var(--teal);
+            border-radius: 2px;
+            margin: 28px auto 0;
+        }
 
-.resource-number {
-  font-family: var(--font-display);
-  font-size: 2.5rem;
-  font-weight: 800;
-  color: var(--secondary);
-  -webkit-text-stroke: 1px var(--border);
-  position: absolute;
-  top: 0.75rem;
-  right: 1rem;
-  line-height: 1;
-}
-.resource-icon {
-  width: 44px; height: 44px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.3rem;
-  margin-bottom: 1rem;
-}
-.resource-icon.blue { background: rgba(0,128,255,0.1); }
-.resource-icon.purple { background: rgba(153,69,255,0.1); }
-.resource-icon.pink { background: rgba(229,77,158,0.1); }
+        /* ===== MAIN CONTENT ===== */
+        .container {
+            max-width: 1060px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
 
-.resource-card h3 {
-  font-family: var(--font-display);
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: var(--foreground);
-  margin-bottom: 0.5rem;
-  line-height: 1.25;
-}
-.resource-card p {
-  font-size: 0.85rem;
-  color: var(--muted-foreground);
-  line-height: 1.55;
-  flex-grow: 1;
-}
-.card-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  margin-top: 1rem;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--btn-blue);
-  text-decoration: none;
-  transition: gap 0.3s, color 0.3s;
-}
-.card-link:hover {
-  gap: 0.6rem;
-  color: var(--brand-purple);
-}
-.new-tab-hint {
-  font-size: 0.7rem;
-  font-weight: 400;
-  color: var(--muted-foreground);
-}
+        /* ===== RESOURCES SECTION ===== */
+        .resources-section {
+            padding: 56px 0;
+        }
 
-/* --- INFO NOTE --- */
-.info-note {
-  text-align: center;
-  padding: 1.5rem 0 0;
-  font-size: 0.82rem;
-  color: var(--muted-foreground);
-  line-height: 1.5;
-}
+        .resources-section .section-title {
+            text-align: center;
+            font-family: 'Fraunces', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 8px;
+        }
 
-/* --- ABOUT / CTA SECTION --- */
-.about-section {
-  padding: 3rem 0;
-  background: var(--background);
-  border-top: 1px solid var(--border);
-}
-.about-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 2rem;
-  align-items: start;
-}
-@media (min-width: 700px) {
-  .about-grid { grid-template-columns: 1fr 1.2fr; }
-}
+        .resources-section .section-sub {
+            text-align: center;
+            color: var(--text-light);
+            font-size: 0.92rem;
+            margin-bottom: 40px;
+        }
 
-.about-card {
-  background: var(--secondary);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 2rem;
-}
-.about-eyebrow {
-  font-family: var(--font-mono);
-  font-size: 0.62rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--brand-purple);
-  margin-bottom: 0.75rem;
-}
-.about-card h2 {
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--foreground);
-  margin-bottom: 0.75rem;
-  line-height: 1.2;
-}
-.about-card p {
-  font-size: 0.9rem;
-  color: var(--muted-foreground);
-  line-height: 1.65;
-  margin-bottom: 0.75rem;
-}
-.about-card p strong { color: var(--foreground); }
+        /* Card grids */
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 24px;
+        }
 
-.services-list {
-  list-style: none;
-  padding: 0;
-  margin: 1rem 0 0;
-}
-.services-list li {
-  font-size: 0.82rem;
-  color: var(--muted-foreground);
-  padding: 0.35rem 0 0.35rem 1.5rem;
-  position: relative;
-}
-.services-list li::before {
-  content: '\2192';
-  position: absolute;
-  left: 0;
-  color: var(--brand-purple);
-  font-weight: 600;
-}
+        .resources-grid-row2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            max-width: 700px;
+            margin: 0 auto 32px;
+        }
 
-/* CTA Card */
-.cta-card {
-  background: linear-gradient(135deg, var(--primary) 0%, #1e1045 100%);
-  border: 1px solid rgba(153,69,255,0.2);
-  border-radius: var(--radius);
-  padding: 2rem;
-  text-align: center;
-  color: white;
-}
-.cta-card h3 {
-  font-family: var(--font-display);
-  font-size: 1.3rem;
-  margin-bottom: 0.5rem;
-  color: white;
-}
-.cta-card p {
-  font-size: 0.88rem;
-  color: rgba(255,255,255,0.65);
-  margin-bottom: 1.25rem;
-  line-height: 1.55;
-}
-.cta-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.85rem 2rem;
-  background: linear-gradient(135deg, var(--brand-purple), var(--brand-pink));
-  color: white;
-  border: none;
-  border-radius: 10px;
-  font-family: var(--font-body);
-  font-size: 0.9rem;
-  font-weight: 600;
-  text-decoration: none;
-  transition: all 0.3s;
-  box-shadow: 0 4px 20px rgba(153,69,255,0.3);
-}
-.cta-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 28px rgba(153,69,255,0.4);
-}
+        @media (max-width: 768px) {
+            .resources-grid { grid-template-columns: 1fr; }
+            .resources-grid-row2 { grid-template-columns: 1fr; max-width: 100%; }
+        }
 
-/* --- FOOTER --- */
-.page-footer {
-  text-align: center;
-  padding: 2.5rem 1.5rem;
-  font-size: 0.75rem;
-  color: var(--muted-foreground);
-  border-top: 1px solid var(--border);
-  margin-top: 2rem;
-}
-.page-footer strong { color: var(--foreground); }
-.page-footer a { color: var(--btn-blue); text-decoration: none; }
+        .resource-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px 24px 24px;
+            position: relative;
+            transition: box-shadow 0.3s, transform 0.2s;
+        }
 
-/* --- PRINT --- */
-@media print {
-  .hero { background: #1a1a2e !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .resource-card { break-inside: avoid; }
-}
+        .resource-card:hover {
+            box-shadow: 0 8px 30px rgba(124, 58, 237, 0.1);
+            transform: translateY(-3px);
+        }
 
-/* --- RESPONSIVE --- */
-@media (max-width: 640px) {
-  .hero { padding: 2.5rem 0 2rem; }
-  .container { padding: 0 1rem; }
-}
-</style>
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .card-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .icon-worksheet { background: #ede9fe; }
+        .icon-workflow { background: #e0f2fe; }
+        .icon-rubric { background: #f0e7fe; }
+        .icon-notebooklm { background: #d1fae5; }
+        .icon-rubric-full { background: #fce7f3; }
+
+        .card-number {
+            font-family: 'Fraunces', serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #e2e8f0;
+            line-height: 1;
+        }
+
+        .resource-card h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 10px;
+            line-height: 1.35;
+        }
+
+        .new-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--pink), var(--purple));
+            color: white;
+            font-size: 0.58rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 2px 7px;
+            border-radius: 4px;
+            margin-left: 6px;
+            vertical-align: middle;
+            position: relative;
+            top: -1px;
+        }
+
+        .resource-card p {
+            font-size: 0.88rem;
+            color: var(--text-light);
+            line-height: 1.65;
+            margin-bottom: 20px;
+        }
+
+        .card-link {
+            color: var(--purple);
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: color 0.2s;
+        }
+
+        .card-link:hover { color: var(--purple-dark); }
+
+        .card-link-note {
+            font-size: 0.78rem;
+            color: var(--text-light);
+            font-weight: 400;
+            margin-left: 4px;
+        }
+
+        .resources-note {
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-light);
+            padding: 20px 0 0;
+            font-style: italic;
+        }
+
+        /* ===== ABOUT SECTION ===== */
+        .about-section {
+            background: var(--off-white);
+            padding: 64px 0;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        @media (max-width: 700px) {
+            .about-grid { grid-template-columns: 1fr; }
+        }
+
+        .about-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--purple);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .about-grid h2 {
+            font-family: 'Fraunces', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .about-grid p {
+            font-size: 0.92rem;
+            color: var(--text-light);
+            margin-bottom: 12px;
+        }
+
+        .about-grid strong { color: var(--text); }
+
+        .skills-list {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .skills-list li {
+            font-size: 0.88rem;
+            color: var(--text-light);
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .skills-list li::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--purple);
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .cta-box {
+            background: var(--navy);
+            color: white;
+            border-radius: 20px;
+            padding: 36px 32px;
+        }
+
+        .cta-box h3 {
+            font-family: 'Fraunces', serif;
+            font-size: 1.25rem;
+            margin-bottom: 12px;
+        }
+
+        .cta-box p {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.92rem;
+            margin-bottom: 24px;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--purple);
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 12px;
+            transition: background 0.2s;
+        }
+
+        .cta-button:hover { background: var(--purple-dark); }
+
+        .cta-email {
+            display: block;
+            margin-top: 12px;
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.5);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            text-align: center;
+            padding: 40px 24px;
+            border-top: 1px solid var(--border);
+        }
+
+        footer .brand {
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--text);
+            margin-bottom: 2px;
+        }
+
+        footer p {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-top: 4px;
+        }
+
+        footer a {
+            color: var(--purple);
+            text-decoration: none;
+        }
+
+        footer a:hover { text-decoration: underline; }
+    </style>
 </head>
 <body>
 
-<div class="page">
-
-  <!-- HERO -->
-  <section class="hero">
-    <div class="container">
-      <span class="hero-eyebrow">LearnAIID LLC — Workshop Resources</span>
-      <h1>The Authenticity <span class="accent">Lab</span></h1>
-      <p class="subtitle">Crafting "Un-Googlable" Tasks with NotebookLM, ChatGPT, and Gemini. Your takeaway resources from today's session — free to use, adapt, and share with attribution.</p>
-      <div class="hero-divider"></div>
+    <!-- ===== HERO ===== -->
+    <div class="hero">
+        <div class="hero-nav">
+            <div class="hero-brand">LearnAIID LLC — Workshop Resources</div>
+            <div class="hero-tag">Free to use with attribution</div>
+        </div>
+        <h1>The Authenticity <em>Lab</em></h1>
+        <p>Crafting "Un-Googlable" Tasks with NotebookLM, ChatGPT, and Gemini. Your takeaway resources from today's session — free to use, adapt, and share with attribution.</p>
+        <div class="hero-divider"></div>
     </div>
-  </section>
 
-  <!-- RESOURCES -->
-  <section class="resources-section">
+    <!-- ===== RESOURCES ===== -->
     <div class="container">
+        <div class="resources-section">
+            <h2 class="section-title">Your Takeaway Resources</h2>
+            <p class="section-sub">Five tools to redesign any assignment for the AI era.</p>
 
-      <div class="section-heading">
-        <h2>Your Takeaway Resources</h2>
-        <p>Three tools to redesign any assignment for the AI era.</p>
-      </div>
+            <!-- Row 1: Original 3 cards -->
+            <div class="resources-grid">
+                <div class="resource-card">
+                    <div class="card-top">
+                        <div class="card-icon icon-worksheet">📋</div>
+                        <div class="card-number">01</div>
+                    </div>
+                    <h3>Assignment Redesign Worksheet</h3>
+                    <p>A five-step framework to transform any existing assignment into a process-based, AI-integrated assessment. Includes a built-in Process-Oriented Rubric with five criteria and suggested weightings.</p>
+                    <a class="card-link" href="assignment-redesign-worksheet.html" target="_blank" rel="noopener">Open Resource ↗ <span class="card-link-note">(opens in new tab)</span></a>
+                </div>
 
-      <div class="resources-grid">
+                <div class="resource-card">
+                    <div class="card-top">
+                        <div class="card-icon icon-workflow">🔗</div>
+                        <div class="card-number">02</div>
+                    </div>
+                    <h3>Shared Chat Submission Workflow</h3>
+                    <p>Step-by-step guide for requiring and collecting AI conversation links from ChatGPT, Gemini, and NotebookLM. Includes LMS setup options, copy-paste syllabus language, student FAQ, and troubleshooting.</p>
+                    <a class="card-link" href="shared-chat-workflow.html" target="_blank" rel="noopener">Open Resource ↗ <span class="card-link-note">(opens in new tab)</span></a>
+                </div>
 
-        <div class="resource-card">
-          <span class="resource-number">01</span>
-          <div class="resource-icon blue">&#x1F4CB;</div>
-          <h3>Assignment Redesign Worksheet</h3>
-          <p>A five-step framework to transform any existing assignment into a process-based, AI-integrated assessment. Includes a built-in Process-Oriented Rubric with five criteria and suggested weightings.</p>
-          <a href="assignment-redesign-worksheet.html" class="card-link" target="_blank" rel="noopener">Open Resource &#x2197; <span class="new-tab-hint">(opens in new tab)</span></a>
+                <div class="resource-card">
+                    <div class="card-top">
+                        <div class="card-icon icon-rubric">📊</div>
+                        <div class="card-number">03</div>
+                    </div>
+                    <h3>Process-Oriented Rubric</h3>
+                    <p>A standalone rubric that grades the learning journey: Prompt Quality, Source Interrogation, Hallucination Detection, Human Synthesis, and Reflection. Customizable weightings for any discipline.</p>
+                    <a class="card-link" href="process-oriented-rubric-quick.html" target="_blank" rel="noopener">Open Resource ↗ <span class="card-link-note">(opens in new tab)</span></a>
+                </div>
+            </div>
+
+            <!-- Row 2: 2 new cards, centered -->
+            <div class="resources-grid-row2">
+                <div class="resource-card">
+                    <div class="card-top">
+                        <div class="card-icon icon-notebooklm">🔒</div>
+                        <div class="card-number">04</div>
+                    </div>
+                    <h3>Crafting the Source-Locked Inquiry <span class="new-badge">New</span></h3>
+                    <p>Step-by-step guide to using NotebookLM for reading accountability AI can't fake. Create notebooks, design source-locked questions, test the source lock, and grade the inquiry process. Includes example questions across four disciplines.</p>
+                    <a class="card-link" href="notebooklm-source-locked-inquiry.html" target="_blank" rel="noopener">Open Resource ↗ <span class="card-link-note">(opens in new tab)</span></a>
+                </div>
+
+                <div class="resource-card">
+                    <div class="card-top">
+                        <div class="card-icon icon-rubric-full">📊</div>
+                        <div class="card-number">05</div>
+                    </div>
+                    <h3>Crafting the Process-Oriented Rubric <span class="new-badge">New</span></h3>
+                    <p>The complete rubric framework with full performance descriptors (Exemplary through Beginning), LMS implementation steps, syllabus-ready language, and the 2-minute grading scan. 50% of the grade rewards how students think.</p>
+                    <a class="card-link" href="process-oriented-rubric.html" target="_blank" rel="noopener">Open Resource ↗ <span class="card-link-note">(opens in new tab)</span></a>
+                </div>
+            </div>
+
+            <p class="resources-note">Each resource opens in a new tab so you don't lose your place. Save, print, or bookmark for later.</p>
         </div>
-
-        <div class="resource-card">
-          <span class="resource-number">02</span>
-          <div class="resource-icon purple">&#x1F517;</div>
-          <h3>Shared Chat Submission Workflow</h3>
-          <p>Step-by-step guide for requiring and collecting AI conversation links from ChatGPT, Gemini, and NotebookLM. Includes LMS setup options, copy-paste syllabus language, student FAQ, and troubleshooting.</p>
-          <a href="shared-chat-workflow.html" class="card-link" target="_blank" rel="noopener">Open Resource &#x2197; <span class="new-tab-hint">(opens in new tab)</span></a>
-        </div>
-
-        <div class="resource-card">
-          <span class="resource-number">03</span>
-          <div class="resource-icon pink">&#x1F4CA;</div>
-          <h3>Process-Oriented Rubric</h3>
-          <p>A standalone rubric that grades the learning journey: Prompt Quality, Source Interrogation, Hallucination Detection, Human Synthesis, and Reflection. Customizable weightings for any discipline.</p>
-          <a href="process-oriented-rubric.html" class="card-link" target="_blank" rel="noopener">Open Resource &#x2197; <span class="new-tab-hint">(opens in new tab)</span></a>
-        </div>
-
-      </div>
-
-      <div class="info-note">
-        Each resource opens in a new tab so you don't lose your place. Save, print, or bookmark for later.
-      </div>
-
     </div>
-  </section>
 
-  <!-- ABOUT + CTA -->
-  <section class="about-section">
-    <div class="container">
-      <div class="about-grid">
-
-        <div class="about-card">
-          <div class="about-eyebrow">About the Presenter</div>
-          <h2>Page Durham</h2>
-          <p>Founder of <strong>LearnAIID LLC</strong> &#x2014; an AI consulting practice specializing in educational technology, accessibility compliance, and instructional design for higher education, K-12, and government organizations.</p>
-          <p>Page brings deep expertise in WCAG 2.1 AA compliance, Canvas LMS development, AI integration in education, and workshop facilitation. She has delivered TEDx presentations and leads accessibility compliance initiatives across Virginia's community college system.</p>
-          <ul class="services-list">
-            <li>AI-Integrated Assessment Design</li>
-            <li>WCAG 2.1 AA Accessibility Compliance</li>
-            <li>Faculty Workshops &amp; Training Programs</li>
-            <li>Canvas LMS Course Development</li>
-            <li>Instructional Design Consulting</li>
-          </ul>
+    <!-- ===== ABOUT ===== -->
+    <div class="about-section">
+        <div class="container">
+            <div class="about-grid">
+                <div>
+                    <div class="about-label">About the Presenter</div>
+                    <h2>Page Durham</h2>
+                    <p>Founder of <strong>LearnAIID LLC</strong> — an AI consulting practice specializing in educational technology, accessibility compliance, and instructional design for higher education, K-12, and government organizations.</p>
+                    <p>Page brings deep expertise in WCAG 2.1 AA compliance, Canvas LMS development, AI integration in education, and workshop facilitation. She has delivered TEDx presentations and leads accessibility compliance initiatives across Virginia's community college system.</p>
+                    <ul class="skills-list">
+                        <li>AI-Integrated Assessment Design</li>
+                        <li>WCAG 2.1 AA Accessibility Compliance</li>
+                        <li>Faculty Workshops & Training Programs</li>
+                        <li>Canvas LMS Course Development</li>
+                        <li>Instructional Design Consulting</li>
+                    </ul>
+                </div>
+                <div class="cta-box">
+                    <h3>Bring This Workshop to Your Campus</h3>
+                    <p>Need help redesigning assessments for the AI era? Want a customized version of The Authenticity Lab for your faculty? Let's talk.</p>
+                    <a class="cta-button" href="mailto:learnaiid.pd@gmail.com?subject=Authenticity%20Lab%20Workshop%20Inquiry">✉ Get in Touch</a>
+                    <span class="cta-email">learnaiid.pd@gmail.com</span>
+                </div>
+            </div>
         </div>
-
-        <div class="cta-card">
-          <h3>Bring This Workshop to Your Campus</h3>
-          <p>Need help redesigning assessments for the AI era? Want a customized version of The Authenticity Lab for your faculty? Let's talk.</p>
-          <a href="mailto:learnaiid.pd@gmail.com?subject=Authenticity%20Lab%20Workshop%20Inquiry" class="cta-btn">
-            &#x2709; Get in Touch
-          </a>
-          <p style="margin-top:1rem; font-size:0.78rem; color:rgba(255,255,255,0.5);">learnaiid.pd@gmail.com</p>
-        </div>
-
-      </div>
     </div>
-  </section>
 
-  <!-- FOOTER -->
-  <footer class="page-footer">
-    <p><strong>LearnAIID LLC</strong> &bull; AI Consulting for Education, Accessibility &amp; Instructional Design</p>
-    <p style="margin-top:0.4rem;">&copy; 2025 LearnAIID LLC &bull; <a href="https://learnaiid.com">learnaiid.com</a> &bull; Free to use and adapt with attribution</p>
-  </footer>
-</div>
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <p class="brand">LearnAIID LLC</p>
+        <p>AI Consulting for Education, Accessibility & Instructional Design</p>
+        <p>© 2025 LearnAIID LLC · <a href="https://learnaiid.com">learnaiid.com</a> · Free to use and adapt with attribution</p>
+    </footer>
 
 </body>
 </html>
