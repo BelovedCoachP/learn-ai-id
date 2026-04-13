@@ -40,7 +40,6 @@
     margin: 0 auto;
   }
 
-  /* HEADER */
   .header {
     text-align: center;
     margin-bottom: 2.5rem;
@@ -79,7 +78,6 @@
     background: var(--surface);
   }
 
-  /* TAB NAV */
   .tab-nav {
     display: flex;
     gap: 0.25rem;
@@ -122,10 +120,7 @@
   .tab-panel { display: none; }
   .tab-panel.active { display: block; }
 
-  /* SECTION */
-  .section {
-    margin-bottom: 2rem;
-  }
+  .section { margin-bottom: 2rem; }
   .section-title {
     font-family: var(--mono);
     font-size: 0.8rem;
@@ -143,7 +138,6 @@
     display: inline-block;
   }
 
-  /* CARD GRID */
   .card-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
@@ -183,9 +177,6 @@
     text-transform: uppercase;
     letter-spacing: 0.06em;
     margin-bottom: 0.5rem;
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
   }
   .card.blue .card-label { color: var(--accent); }
   .card.green .card-label { color: var(--green); }
@@ -220,13 +211,8 @@
   .card.orange .card-use { border-left-color: var(--orange); }
   .card.pink .card-use { border-left-color: var(--pink); }
   .card.purple .card-use { border-left-color: var(--purple); }
+  .card-use strong { color: var(--text); font-weight: 600; }
 
-  .card-use strong {
-    color: var(--text);
-    font-weight: 600;
-  }
-
-  /* WORKFLOW STEPS (for video tab) */
   .workflow {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -294,7 +280,6 @@
     border-radius: 3px;
     color: var(--purple);
   }
-
   .your-angle {
     margin-top: 0.8rem;
     padding: 0.6rem 0.8rem;
@@ -306,7 +291,25 @@
   }
   .your-angle strong { color: var(--pink); font-weight: 600; }
 
-  /* FOOTER */
+  .note-box {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+  .note-box strong { color: var(--accent); }
+  .note-box code {
+    font-family: var(--mono);
+    background: rgba(255,255,255,0.06);
+    padding: 0.1rem 0.3rem;
+    border-radius: 3px;
+    color: var(--purple);
+  }
+
   .footer {
     text-align: center;
     margin-top: 2.5rem;
@@ -314,9 +317,9 @@
     border-top: 1px solid var(--border);
     font-size: 0.7rem;
     color: var(--text-muted);
+    line-height: 1.8;
   }
 
-  /* RESPONSIVE */
   @media (max-width: 700px) {
     body { padding: 1rem; }
     .card-grid { grid-template-columns: 1fr; }
@@ -341,83 +344,273 @@
 </div>
 
 <div class="tab-nav">
-  <button class="tab-btn active" data-tab="commands">Commands</button>
+  <button class="tab-btn active" data-tab="commands">Commands (19+)</button>
   <button class="tab-btn" data-tab="automation">Automation</button>
   <button class="tab-btn" data-tab="content">Content Pipeline</button>
   <button class="tab-btn" data-tab="video">Video Workflows ★</button>
   <button class="tab-btn" data-tab="memory">Memory + Scope</button>
 </div>
 
-<!-- ============ COMMANDS TAB ============ -->
+<!-- ==================== COMMANDS TAB ==================== -->
 <div class="tab-panel active" id="tab-commands">
 
+  <!-- ESSENTIAL -->
   <div class="section">
-    <div class="section-title"><span class="dot" style="background:var(--accent)"></span> Session Management</div>
+    <div class="section-title"><span class="dot" style="background:var(--accent)"></span> Essential: Daily Drivers</div>
     <div class="card-grid">
 
       <div class="card blue">
         <div class="card-label">SESSION</div>
         <div class="card-command">/compact</div>
-        <div class="card-desc">Summarizes the current conversation to free up context window space. Keeps Claude sharp during long sessions.</div>
-        <div class="card-use"><strong>Your move:</strong> Run this midway through any long VCCS remediation session or when Claude starts losing thread on multi-file audits.</div>
+        <div class="card-desc">Clears history but keeps a smart summary in context. Frees the context window without losing the thread. Accepts optional instructions: <code>/compact [focus on WCAG findings only]</code></div>
+        <div class="card-use"><strong>Your move:</strong> Run midway through long VCCS remediation sessions. Add instructions like <code>/compact [keep the alt text failures list]</code> so the summary captures what matters.</div>
       </div>
 
       <div class="card blue">
         <div class="card-label">SESSION</div>
-        <div class="card-command">/clear</div>
-        <div class="card-desc">Wipes the entire session history. Full reset, fresh start.</div>
-        <div class="card-use"><strong>Your move:</strong> Use between switching contexts (VCCS work to QM prep to Germanna grading) so Claude doesn't bleed one project's context into another.</div>
+        <div class="card-command">/clear <span style="color:var(--text-muted);font-weight:400;font-size:0.75rem;">(or /reset)</span></div>
+        <div class="card-desc">Wipes the entire session history. Full nuclear reset, completely fresh context.</div>
+        <div class="card-use"><strong>Your move:</strong> Use when switching roles (VCCS remediation to QM workshop prep to Germanna grading) so context doesn't bleed between projects.</div>
+      </div>
+
+      <div class="card blue">
+        <div class="card-label">SESSION</div>
+        <div class="card-command">/cost</div>
+        <div class="card-desc">Shows the total cost and duration of the current session. Real-time token spend monitoring.</div>
+        <div class="card-use"><strong>Your move:</strong> Check during heavy sessions (batch VTT cleanup, multi-file WCAG audits, Remotion renders) to track API spend against your LearnAIID budget. Useful when deciding Opus vs Sonnet.</div>
+      </div>
+
+      <div class="card blue">
+        <div class="card-label">SESSION</div>
+        <div class="card-command">/model</div>
+        <div class="card-desc">Switch between Claude models on the fly. Applies to current and future sessions. Supports <code>--model</code> flag for custom model names.</div>
+        <div class="card-use"><strong>Your move:</strong> Opus for complex WCAG audits and QM content where nuance matters. Sonnet for batch file processing, VTT timestamp cleanup, and quick social drafts to save tokens.</div>
+      </div>
+
+      <div class="card blue">
+        <div class="card-label">SESSION</div>
+        <div class="card-command">/export</div>
+        <div class="card-desc">Export the current conversation to a file or clipboard. Saves the full session transcript.</div>
+        <div class="card-use"><strong>Your move:</strong> Export VCCS audit sessions as documentation for LearningMate deliverables. Export QM workshop dev conversations as process records. Great for your "here's how I built this" portfolio.</div>
+      </div>
+
+      <div class="card blue">
+        <div class="card-label">SESSION</div>
+        <div class="card-command">/help</div>
+        <div class="card-desc">Shows help and all available commands. Quickest way to see everything at your fingertips.</div>
+        <div class="card-use"><strong>Your move:</strong> When you forget a command name mid-session, faster than switching to this cheat sheet.</div>
+      </div>
+
+      <div class="card blue">
+        <div class="card-label">SESSION</div>
+        <div class="card-command">/exit <span style="color:var(--text-muted);font-weight:400;font-size:0.75rem;">(or /quit)</span></div>
+        <div class="card-desc">Exits the REPL and closes Claude Code cleanly.</div>
+        <div class="card-use"><strong>Your move:</strong> Clean shutdown instead of just closing the terminal. Makes sure everything saves properly.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SETUP & CONFIG -->
+  <div class="section">
+    <div class="section-title"><span class="dot" style="background:var(--green)"></span> Setup + Config: One-Time or Occasional</div>
+    <div class="card-grid">
+
+      <div class="card green">
+        <div class="card-label">SETUP</div>
+        <div class="card-command">/init</div>
+        <div class="card-desc">Initializes a new <code>CLAUDE.md</code> file with codebase documentation. Usually your very first step in a new project.</div>
+        <div class="card-use"><strong>Your move:</strong> Run when setting up each project folder (VCCS, QM, Germanna, Classfindr, LearnAIID Academy). Then customize the generated CLAUDE.md with role-specific rules, voice prefs, and your no-em-dash policy.</div>
       </div>
 
       <div class="card green">
-        <div class="card-label">CONTROL</div>
-        <div class="card-command">Permission Modes</div>
-        <div class="card-desc">Set how much Claude can do autonomously vs. asking for your approval before each action.</div>
-        <div class="card-use"><strong>Your move:</strong> Tighten permissions for client deliverables (VCCS docs). Loosen for batch file processing or personal content generation.</div>
+        <div class="card-label">SETUP</div>
+        <div class="card-command">/config</div>
+        <div class="card-desc">Opens the config/settings panel. Theme, preferences, and global configuration.</div>
+        <div class="card-use"><strong>Your move:</strong> Set default theme, configure global preferences. Come back here when Claude's behavior feels off or you want to adjust defaults.</div>
       </div>
 
       <div class="card green">
-        <div class="card-label">CONTROL</div>
-        <div class="card-command">Plan Mode</div>
-        <div class="card-desc">Claude shows you its full plan before executing anything. You approve, adjust, or redirect.</div>
-        <div class="card-use"><strong>Your move:</strong> Use this for complex multi-step tasks like building a full Canvas module or generating a QM workshop deck.</div>
+        <div class="card-label">SETUP</div>
+        <div class="card-command">/permissions</div>
+        <div class="card-desc">Manage what Claude is allowed to do: file access, tool use, autonomous actions vs. confirmation-required.</div>
+        <div class="card-use"><strong>Your move:</strong> Tighten for client deliverables (VCCS docs, QM materials) so Claude asks before writing. Loosen for personal batch tasks like organizing downloads or generating social posts.</div>
       </div>
 
       <div class="card green">
-        <div class="card-label">CONTROL</div>
-        <div class="card-command">Interrupt</div>
-        <div class="card-desc">Stop Claude mid-task and redirect it without starting over.</div>
-        <div class="card-use"><strong>Your move:</strong> When Claude's heading down the wrong path on a remediation or content generation, catch it early.</div>
+        <div class="card-label">SETUP</div>
+        <div class="card-command">/add-dir</div>
+        <div class="card-desc">Add a new working directory to the current session without restarting.</div>
+        <div class="card-use"><strong>Your move:</strong> Mid-session, you need Claude to access your Payhip assets folder or a different VCCS college's document directory. Add it on the fly.</div>
+      </div>
+
+      <div class="card green">
+        <div class="card-label">SETUP</div>
+        <div class="card-command">/ide</div>
+        <div class="card-desc">Manage IDE integrations and show connection status. Links Claude Code to VS Code, JetBrains, etc.</div>
+        <div class="card-use"><strong>Your move:</strong> When editing HTML, CSS, or Canvas theme files in VS Code alongside Claude Code, this keeps them in sync.</div>
+      </div>
+
+      <div class="card green">
+        <div class="card-label">SETUP</div>
+        <div class="card-command">/install-github-app</div>
+        <div class="card-desc">Set up Claude GitHub Actions for a repository. Enables CI/CD integration.</div>
+        <div class="card-use"><strong>Your move:</strong> Connect to your BelovedCoachP repos. When you push updated SKILL.md files or learnaiid.com changes, Claude can auto-validate or run checks.</div>
+      </div>
+
+      <div class="card green">
+        <div class="card-label">DIAGNOSTICS</div>
+        <div class="card-command">/doctor</div>
+        <div class="card-desc">Diagnose and verify your Claude Code installation and settings. First stop when something isn't working.</div>
+        <div class="card-use"><strong>Your move:</strong> Run when Claude Code is glitchy, connectors aren't responding, or a skill isn't triggering. Checks everything and flags what's broken.</div>
+      </div>
+
+      <div class="card green">
+        <div class="card-label">DIAGNOSTICS</div>
+        <div class="card-command">/bug</div>
+        <div class="card-desc">Submit feedback about Claude Code directly to Anthropic.</div>
+        <div class="card-use"><strong>Your move:</strong> When you hit a genuine platform bug (not a skill issue), report it. Power user feedback carries weight.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- POWER USER -->
+  <div class="section">
+    <div class="section-title"><span class="dot" style="background:var(--orange)"></span> Power User: Automation + Quality Control</div>
+    <div class="card-grid">
+
+      <div class="card orange">
+        <div class="card-label">AUTOMATION</div>
+        <div class="card-command">/hooks</div>
+        <div class="card-desc">Manage hook configurations for tool events. Automated guardrails that run before Claude shows you output. Catches banned patterns, formatting violations, quality failures.</div>
+        <div class="card-use"><strong>Your hooks to build:</strong> #1: Flag em dashes in any written output. #2: Check alt text in HTML. #3: Validate WCAG color contrast. #4: Ensure VTT files have speaker labels on every block.</div>
+      </div>
+
+      <div class="card orange">
+        <div class="card-label">AUTOMATION</div>
+        <div class="card-command">/loop</div>
+        <div class="card-desc">Run a task on a scheduled/repeating basis. Cron-style recurring automation for any skill or workflow.</div>
+        <div class="card-use"><strong>Your loops to build:</strong> Morning email briefing at 7:30 AM. Sunday night content calendar review. Daily Payhip sales check. Weekly VCCS progress report for LearningMate.</div>
+      </div>
+
+      <div class="card orange">
+        <div class="card-label">AUTOMATION</div>
+        <div class="card-command">/agents</div>
+        <div class="card-desc">Manage agent configurations. Set up and control subagents that handle parallel tasks simultaneously.</div>
+        <div class="card-use"><strong>Your move:</strong> Audit 5 VCCS PDFs in parallel. Generate LinkedIn + TikTok + Instagram versions of a post simultaneously. Run WCAG checks on multiple Canvas pages at once.</div>
+      </div>
+
+      <div class="card orange">
+        <div class="card-label">AUTOMATION</div>
+        <div class="card-command">/bashes</div>
+        <div class="card-desc">List and manage background bash shells. See what's running, kill stuck processes, manage parallel terminal sessions.</div>
+        <div class="card-use"><strong>Your move:</strong> Remotion rendering in the background while you do VTT cleanup in the foreground? Check render progress without interrupting your current task.</div>
       </div>
 
       <div class="card orange">
         <div class="card-label">QUALITY</div>
         <div class="card-command">Effort Levels</div>
         <div class="card-desc">Tell Claude how much compute and thoroughness to apply. Low for quick drafts, high for polished deliverables.</div>
-        <div class="card-use"><strong>Your move:</strong> High effort for Payhip course content and client-facing VCCS reports. Low effort for brainstorming TikTok hooks.</div>
+        <div class="card-use"><strong>Your move:</strong> High effort for Payhip courses, QM workshops, client-facing VCCS reports. Low effort for brainstorming TikTok hooks, organizing files, quick email drafts.</div>
       </div>
 
       <div class="card orange">
         <div class="card-label">QUALITY</div>
-        <div class="card-command">Hooks</div>
-        <div class="card-desc">Automated guardrails that run before Claude shows you output. Check for banned words, character limits, formatting rules.</div>
-        <div class="card-use"><strong>Your move:</strong> Set a hook that flags em dashes in any written output. Set another that checks alt text presence in HTML content.</div>
+        <div class="card-command">Plan Mode</div>
+        <div class="card-desc">Claude shows its full execution plan before touching anything. You approve, adjust, or redirect first.</div>
+        <div class="card-use"><strong>Your move:</strong> Use for complex multi-step work: building a full Canvas module, generating a QM workshop deck, running a batch WCAG audit across an entire college's document library.</div>
       </div>
 
       <div class="card orange">
         <div class="card-label">QUALITY</div>
         <div class="card-command">Evals</div>
-        <div class="card-desc">A grading rubric that scores output quality before you approve. Iterate and refine until the Skill consistently hits your standard.</div>
-        <div class="card-use"><strong>Your move:</strong> Build evals for your VTT cleanup skill (speaker labels, timestamp accuracy) and your WCAG audit skill (failure pattern coverage).</div>
+        <div class="card-desc">A grading rubric that scores output quality before you approve. Iterate until the skill consistently hits your standard.</div>
+        <div class="card-use"><strong>Your move:</strong> Eval for VTT skill: speaker labels present, timestamps accurate, no auto-caption artifacts. Eval for WCAG skill: all failure patterns checked, remediation language matches your templates.</div>
+      </div>
+
+      <div class="card orange">
+        <div class="card-label">CONTROL</div>
+        <div class="card-command">Interrupt</div>
+        <div class="card-desc">Stop Claude mid-task and redirect without starting over.</div>
+        <div class="card-use"><strong>Your move:</strong> Catch Claude early when it's heading down the wrong path on a remediation, generating in the wrong voice, or about to overwrite a file you wanted preserved.</div>
       </div>
 
     </div>
   </div>
+
+  <!-- CUSTOM COMMANDS -->
+  <div class="section">
+    <div class="section-title"><span class="dot" style="background:var(--purple)"></span> Custom: Your Slash Commands to Build</div>
+    <div class="card-grid">
+
+      <div class="card purple">
+        <div class="card-label">HOW IT WORKS</div>
+        <div class="card-command">Custom /commands</div>
+        <div class="card-desc">Define your own commands stored as Skills, triggered with a slash prefix. Type <code>/</code> in Claude Code to see all available commands (built-in + custom). Each maps to a Skill you've built.</div>
+        <div class="card-use"><strong>Your move:</strong> Build one for each of your most repeated workflows. The suggested commands below map to your five existing skills plus new ones worth creating.</div>
+      </div>
+
+      <div class="card purple">
+        <div class="card-label">VCCS / LEARNINGMATE</div>
+        <div class="card-command">/audit</div>
+        <div class="card-desc">Triggers your WCAG Auditor skill. Point it at a file or URL for a full accessibility audit with failure patterns and remediation language.</div>
+        <div class="card-use"><strong>Your most-used command.</strong> Run on PDFs, Word docs, Canvas pages, and HTML files across all 23 VCCS colleges. Pair with <code>/agents</code> for parallel batch audits.</div>
+      </div>
+
+      <div class="card purple">
+        <div class="card-label">VCCS</div>
+        <div class="card-command">/vtt</div>
+        <div class="card-desc">Triggers your VTT Caption Cleanup skill. Processes auto-generated captions into WCAG 2.1 AA compliant files.</div>
+        <div class="card-use"><strong>For every Sheri Prupis and Surbhi Lohia webinar.</strong> Speaker labels, timestamp fixes, junk removal, all in one pass. Build an eval to validate output quality.</div>
+      </div>
+
+      <div class="card purple">
+        <div class="card-label">LEARNAIID</div>
+        <div class="card-command">/post</div>
+        <div class="card-desc">Generates a social media post using your LearnAIID voice/brand skill. Optionally schedules via Blotato MCP.</div>
+        <div class="card-use"><strong>Quick-fire content for LinkedIn, TikTok, Instagram.</strong> Feed it a topic or image, get a platform-ready post in your voice. Chain with Blotato for one-command publish.</div>
+      </div>
+
+      <div class="card purple">
+        <div class="card-label">GERMANNA / CLASSFINDR</div>
+        <div class="card-command">/module</div>
+        <div class="card-desc">Triggers your Canvas Module Designer skill. Generates UDL-aligned module shells with hook pages, discussions, and QM-mapped assessments.</div>
+        <div class="card-use"><strong>ITE 152, MUS 121, or any new course build.</strong> Mission-Based UDL Loop structure, accessible HTML, DesignPlus-ready, importable to Canvas.</div>
+      </div>
+
+      <div class="card purple">
+        <div class="card-label">QUALITY MATTERS</div>
+        <div class="card-command">/workshop</div>
+        <div class="card-desc">Triggers your QM Workshop Builder skill. Facilitator guides, participant activities, and slide content aligned to QM standards.</div>
+        <div class="card-use"><strong>Part 1, Part 2, or new module development.</strong> Keeps your national facilitator content consistent and QM-aligned across every delivery.</div>
+      </div>
+
+      <div class="card purple">
+        <div class="card-label">ALL ROLES</div>
+        <div class="card-command">/briefing</div>
+        <div class="card-desc">Morning email + calendar summary across all roles. Pulls Gmail, cross-references Google Calendar, delivers one prioritized overview.</div>
+        <div class="card-use"><strong>One command at 7:30 AM (or via /loop).</strong> LearningMate updates, QM threads, Germanna student emails, Classfindr tasks. All in one view, zero tab-switching.</div>
+      </div>
+
+      <div class="card purple">
+        <div class="card-label">LEARNAIID ACADEMY</div>
+        <div class="card-command">/render</div>
+        <div class="card-desc">Triggers a Remotion video render workflow. Specify type (explainer, demo, testimonial, data viz) and Claude handles the rest.</div>
+        <div class="card-use"><strong>Course preview videos for Payhip.</strong> WCAG explainer clips for social. Compliance data visualizations for LinkedIn and conference talks. See the Video Workflows tab for details.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="note-box">
+    <strong>Note:</strong> There are 29 total built-in commands confirmed on screen. This list covers the 19 captured from video tutorials plus 8 suggested custom commands for your workflows. To see the complete built-in set, type <code>/</code> in your Claude Code terminal and the full autocomplete dropdown will appear. The remaining ~10 likely live in the <code>/l</code>, <code>/p</code>, <code>/r</code>, <code>/s</code>, <code>/t</code>, <code>/v</code> range.
+  </div>
+
 </div>
 
-<!-- ============ AUTOMATION TAB ============ -->
+<!-- ==================== AUTOMATION TAB ==================== -->
 <div class="tab-panel" id="tab-automation">
-
   <div class="section">
     <div class="section-title"><span class="dot" style="background:var(--green)"></span> Scheduling + Agents</div>
     <div class="card-grid">
@@ -460,17 +653,16 @@
       <div class="card purple">
         <div class="card-label">CONNECTORS</div>
         <div class="card-command">Custom Slash Commands</div>
-        <div class="card-desc">Define your own commands (e.g., <code>/post</code>, <code>/audit</code>) that trigger specific Skills. Type <code>/</code> to see all available.</div>
-        <div class="card-use"><strong>Your move:</strong> <code>/audit</code> triggers your WCAG Auditor skill. <code>/vtt</code> triggers caption cleanup. <code>/post</code> generates and schedules a LearnAIID social post.</div>
+        <div class="card-desc">Define your own (e.g., <code>/post</code>, <code>/audit</code>) that trigger specific Skills. Type <code>/</code> to see all available.</div>
+        <div class="card-use"><strong>Your move:</strong> <code>/audit</code> = WCAG Auditor. <code>/vtt</code> = caption cleanup. <code>/post</code> = LearnAIID social. <code>/module</code> = Canvas builder. <code>/workshop</code> = QM content.</div>
       </div>
 
     </div>
   </div>
 </div>
 
-<!-- ============ CONTENT TAB ============ -->
+<!-- ==================== CONTENT TAB ==================== -->
 <div class="tab-panel" id="tab-content">
-
   <div class="section">
     <div class="section-title"><span class="dot" style="background:var(--orange)"></span> LearnAIID Content Pipeline</div>
     <div class="card-grid">
@@ -507,7 +699,7 @@
   </div>
 </div>
 
-<!-- ============ VIDEO TAB ============ -->
+<!-- ==================== VIDEO TAB ==================== -->
 <div class="tab-panel" id="tab-video">
 
   <div class="section">
@@ -599,9 +791,8 @@
   </div>
 </div>
 
-<!-- ============ MEMORY TAB ============ -->
+<!-- ==================== MEMORY TAB ==================== -->
 <div class="tab-panel" id="tab-memory">
-
   <div class="section">
     <div class="section-title"><span class="dot" style="background:var(--purple)"></span> Memory + Scope</div>
     <div class="card-grid">
@@ -639,7 +830,8 @@
 </div>
 
 <div class="footer">
-  CLAUDE POWER WORKFLOWS // Page Durham // LearnAIID LLC // Built April 2026<br>
+  CLAUDE POWER WORKFLOWS // Page Durham // LearnAIID LLC // Updated April 2026<br>
+  29 built-in commands confirmed | 19 documented here | 8 custom commands suggested<br>
   Assumes Claude Desktop, Cowork, and Claude Code are already installed.
 </div>
 
