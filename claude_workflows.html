@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Power Workflows — Page Durham</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface-hover: #1c2333;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --accent: #58a6ff;
+    --accent-glow: rgba(88, 166, 255, 0.15);
+    --green: #3fb950;
+    --green-glow: rgba(63, 185, 80, 0.12);
+    --orange: #d29922;
+    --orange-glow: rgba(210, 153, 34, 0.12);
+    --pink: #f778ba;
+    --pink-glow: rgba(247, 120, 186, 0.12);
+    --purple: #bc8cff;
+    --purple-glow: rgba(188, 140, 255, 0.12);
+    --red: #ff7b72;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'DM Sans', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.6;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* HEADER */
+  .header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .header h1 {
+    font-family: var(--mono);
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, var(--accent), var(--purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.3rem;
+  }
+  .header .subtitle {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 400;
+  }
+  .header .context {
+    margin-top: 1rem;
+    display: inline-flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .tag {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    background: var(--surface);
+  }
+
+  /* TAB NAV */
+  .tab-nav {
+    display: flex;
+    gap: 0.25rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0;
+  }
+  .tab-btn {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 0.6rem 1rem;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .tab-btn:hover { color: var(--text); }
+  .tab-btn.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+  .tab-btn[data-tab="video"] {
+    color: var(--pink);
+    animation: pulse-subtle 2s ease-in-out infinite;
+  }
+  .tab-btn[data-tab="video"].active {
+    border-bottom-color: var(--pink);
+  }
+  @keyframes pulse-subtle {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+  }
+  .tab-btn[data-tab="video"].active { animation: none; opacity: 1; }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* SECTION */
+  .section {
+    margin-bottom: 2rem;
+  }
+  .section-title {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .section-title .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  /* CARD GRID */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 1rem;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .card:hover {
+    border-color: var(--accent);
+    background: var(--surface-hover);
+    transform: translateY(-1px);
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+  .card.blue::before { background: var(--accent); }
+  .card.green::before { background: var(--green); }
+  .card.orange::before { background: var(--orange); }
+  .card.pink::before { background: var(--pink); }
+  .card.purple::before { background: var(--purple); }
+
+  .card-label {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .card.blue .card-label { color: var(--accent); }
+  .card.green .card-label { color: var(--green); }
+  .card.orange .card-label { color: var(--orange); }
+  .card.pink .card-label { color: var(--pink); }
+  .card.purple .card-label { color: var(--purple); }
+
+  .card-command {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+    color: var(--text);
+  }
+  .card-desc {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+    margin-bottom: 0.6rem;
+  }
+  .card-use {
+    font-size: 0.72rem;
+    color: var(--text);
+    background: rgba(255,255,255,0.04);
+    padding: 0.5rem 0.7rem;
+    border-radius: 6px;
+    border-left: 2px solid var(--border);
+    line-height: 1.5;
+  }
+  .card.blue .card-use { border-left-color: var(--accent); }
+  .card.green .card-use { border-left-color: var(--green); }
+  .card.orange .card-use { border-left-color: var(--orange); }
+  .card.pink .card-use { border-left-color: var(--pink); }
+  .card.purple .card-use { border-left-color: var(--purple); }
+
+  .card-use strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  /* WORKFLOW STEPS (for video tab) */
+  .workflow {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+  }
+  .workflow::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--pink), var(--purple));
+  }
+  .workflow h3 {
+    font-family: var(--mono);
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--pink);
+    margin-bottom: 0.3rem;
+  }
+  .workflow .wf-desc {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+  }
+  .step-list {
+    list-style: none;
+    counter-reset: steps;
+  }
+  .step-list li {
+    counter-increment: steps;
+    font-size: 0.8rem;
+    color: var(--text);
+    padding: 0.5rem 0 0.5rem 2.2rem;
+    position: relative;
+    border-left: 1px solid var(--border);
+    margin-left: 0.7rem;
+    line-height: 1.5;
+  }
+  .step-list li:last-child { border-left-color: transparent; }
+  .step-list li::before {
+    content: counter(steps);
+    position: absolute;
+    left: -0.55rem;
+    top: 0.45rem;
+    width: 1.1rem; height: 1.1rem;
+    background: var(--bg);
+    border: 1.5px solid var(--pink);
+    border-radius: 50%;
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    font-weight: 700;
+    color: var(--pink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .step-list li code {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    background: rgba(255,255,255,0.06);
+    padding: 0.1rem 0.35rem;
+    border-radius: 3px;
+    color: var(--purple);
+  }
+
+  .your-angle {
+    margin-top: 0.8rem;
+    padding: 0.6rem 0.8rem;
+    background: var(--pink-glow);
+    border-radius: 6px;
+    font-size: 0.75rem;
+    color: var(--text);
+    line-height: 1.5;
+  }
+  .your-angle strong { color: var(--pink); font-weight: 600; }
+
+  /* FOOTER */
+  .footer {
+    text-align: center;
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.7rem;
+    color: var(--text-muted);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 700px) {
+    body { padding: 1rem; }
+    .card-grid { grid-template-columns: 1fr; }
+    .header h1 { font-size: 1.2rem; }
+    .tab-btn { font-size: 0.65rem; padding: 0.5rem 0.7rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>// CLAUDE POWER WORKFLOWS</h1>
+  <div class="subtitle">Quick reference for Page Durham | LearnAIID LLC</div>
+  <div class="context">
+    <span class="tag">Cowork</span>
+    <span class="tag">Claude Code</span>
+    <span class="tag">Skills</span>
+    <span class="tag">MCP Connectors</span>
+    <span class="tag">Remotion</span>
+    <span class="tag">Blotato</span>
+  </div>
+</div>
+
+<div class="tab-nav">
+  <button class="tab-btn active" data-tab="commands">Commands</button>
+  <button class="tab-btn" data-tab="automation">Automation</button>
+  <button class="tab-btn" data-tab="content">Content Pipeline</button>
+  <button class="tab-btn" data-tab="video">Video Workflows ★</button>
+  <button class="tab-btn" data-tab="memory">Memory + Scope</button>
+</div>
+
+<!-- ============ COMMANDS TAB ============ -->
+<div class="tab-panel active" id="tab-commands">
+
+  <div class="section">
+    <div class="section-title"><span class="dot" style="background:var(--accent)"></span> Session Management</div>
+    <div class="card-grid">
+
+      <div class="card blue">
+        <div class="card-label">SESSION</div>
+        <div class="card-command">/compact</div>
+        <div class="card-desc">Summarizes the current conversation to free up context window space. Keeps Claude sharp during long sessions.</div>
+        <div class="card-use"><strong>Your move:</strong> Run this midway through any long VCCS remediation session or when Claude starts losing thread on multi-file audits.</div>
+      </div>
+
+      <div class="card blue">
+        <div class="card-label">SESSION</div>
+        <div class="card-command">/clear</div>
+        <div class="card-desc">Wipes the entire session history. Full reset, fresh start.</div>
+        <div class="card-use"><strong>Your move:</strong> Use between switching contexts (VCCS work to QM prep to Germanna grading) so Claude doesn't bleed one project's context into another.</div>
+      </div>
+
+      <div class="card green">
+        <div class="card-label">CONTROL</div>
+        <div class="card-command">Permission Modes</div>
+        <div class="card-desc">Set how much Claude can do autonomously vs. asking for your approval before each action.</div>
+        <div class="card-use"><strong>Your move:</strong> Tighten permissions for client deliverables (VCCS docs). Loosen for batch file processing or personal content generation.</div>
+      </div>
+
+      <div class="card green">
+        <div class="card-label">CONTROL</div>
+        <div class="card-command">Plan Mode</div>
+        <div class="card-desc">Claude shows you its full plan before executing anything. You approve, adjust, or redirect.</div>
+        <div class="card-use"><strong>Your move:</strong> Use this for complex multi-step tasks like building a full Canvas module or generating a QM workshop deck.</div>
+      </div>
+
+      <div class="card green">
+        <div class="card-label">CONTROL</div>
+        <div class="card-command">Interrupt</div>
+        <div class="card-desc">Stop Claude mid-task and redirect it without starting over.</div>
+        <div class="card-use"><strong>Your move:</strong> When Claude's heading down the wrong path on a remediation or content generation, catch it early.</div>
+      </div>
+
+      <div class="card orange">
+        <div class="card-label">QUALITY</div>
+        <div class="card-command">Effort Levels</div>
+        <div class="card-desc">Tell Claude how much compute and thoroughness to apply. Low for quick drafts, high for polished deliverables.</div>
+        <div class="card-use"><strong>Your move:</strong> High effort for Payhip course content and client-facing VCCS reports. Low effort for brainstorming TikTok hooks.</div>
+      </div>
+
+      <div class="card orange">
+        <div class="card-label">QUALITY</div>
+        <div class="card-command">Hooks</div>
+        <div class="card-desc">Automated guardrails that run before Claude shows you output. Check for banned words, character limits, formatting rules.</div>
+        <div class="card-use"><strong>Your move:</strong> Set a hook that flags em dashes in any written output. Set another that checks alt text presence in HTML content.</div>
+      </div>
+
+      <div class="card orange">
+        <div class="card-label">QUALITY</div>
+        <div class="card-command">Evals</div>
+        <div class="card-desc">A grading rubric that scores output quality before you approve. Iterate and refine until the Skill consistently hits your standard.</div>
+        <div class="card-use"><strong>Your move:</strong> Build evals for your VTT cleanup skill (speaker labels, timestamp accuracy) and your WCAG audit skill (failure pattern coverage).</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ============ AUTOMATION TAB ============ -->
+<div class="tab-panel" id="tab-automation">
+
+  <div class="section">
+    <div class="section-title"><span class="dot" style="background:var(--green)"></span> Scheduling + Agents</div>
+    <div class="card-grid">
+
+      <div class="card green">
+        <div class="card-label">SCHEDULING</div>
+        <div class="card-command">/loop</div>
+        <div class="card-desc">Runs a task on a scheduled or repeating basis. The primary way to set up cron-style recurring automation.</div>
+        <div class="card-use"><strong>Your move:</strong> Morning email briefing across all your roles at 7:30 AM. Weekly content calendar check every Sunday night. Daily Payhip sales summary.</div>
+      </div>
+
+      <div class="card green">
+        <div class="card-label">AGENTS</div>
+        <div class="card-command">Subagents</div>
+        <div class="card-desc">Claude spins up parallel worker agents to handle multiple tasks simultaneously.</div>
+        <div class="card-use"><strong>Your move:</strong> Audit 5 VCCS PDFs in parallel instead of sequentially. Generate social posts for 3 platforms at once.</div>
+      </div>
+
+      <div class="card green">
+        <div class="card-label">REMOTE</div>
+        <div class="card-command">Remote Control + Dispatch</div>
+        <div class="card-desc">Send commands to Claude Code running on your home computer from your phone via the Dispatch app.</div>
+        <div class="card-use"><strong>Your move:</strong> Kick off a batch VTT cleanup or video render from your phone while you're out with Louis or on a mountain road trip.</div>
+      </div>
+
+      <div class="card purple">
+        <div class="card-label">CONNECTORS</div>
+        <div class="card-command">Gmail + Calendar MCP</div>
+        <div class="card-desc">Connect Gmail and Google Calendar. Claude reads your inbox, extracts meeting details, generates daily briefings.</div>
+        <div class="card-use"><strong>Your move:</strong> Build a morning Skill: pull unread from LearningMate, QM, Germanna, and Classfindr. Cross-ref with today's calendar. One summary, zero tab-switching.</div>
+      </div>
+
+      <div class="card purple">
+        <div class="card-label">CONNECTORS</div>
+        <div class="card-command">Blotato MCP</div>
+        <div class="card-desc">Connect social media accounts (Facebook, LinkedIn, Instagram, etc.) for direct posting, scheduling, and content calendar management.</div>
+        <div class="card-use"><strong>Your move:</strong> After generating LearnAIID content, publish directly to LinkedIn and Instagram without opening either app. Schedule a week of posts in one session.</div>
+      </div>
+
+      <div class="card purple">
+        <div class="card-label">CONNECTORS</div>
+        <div class="card-command">Custom Slash Commands</div>
+        <div class="card-desc">Define your own commands (e.g., <code>/post</code>, <code>/audit</code>) that trigger specific Skills. Type <code>/</code> to see all available.</div>
+        <div class="card-use"><strong>Your move:</strong> <code>/audit</code> triggers your WCAG Auditor skill. <code>/vtt</code> triggers caption cleanup. <code>/post</code> generates and schedules a LearnAIID social post.</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ============ CONTENT TAB ============ -->
+<div class="tab-panel" id="tab-content">
+
+  <div class="section">
+    <div class="section-title"><span class="dot" style="background:var(--orange)"></span> LearnAIID Content Pipeline</div>
+    <div class="card-grid">
+
+      <div class="card orange">
+        <div class="card-label">STEP 1: VOICE</div>
+        <div class="card-command">Brand Interview Skill</div>
+        <div class="card-desc">Claude asks you a series of questions about tone, audience, and values, then generates a brand voice document saved locally.</div>
+        <div class="card-use"><strong>You already have this:</strong> Your LearnAIID Voice/Brand SKILL.md. Make sure it's referenced in your CLAUDE.md so every session starts with it loaded.</div>
+      </div>
+
+      <div class="card orange">
+        <div class="card-label">STEP 2: GENERATE</div>
+        <div class="card-command">Image-to-Post Skill</div>
+        <div class="card-desc">Point Claude at photos in a folder. It analyzes each image and writes social posts in your voice to match.</div>
+        <div class="card-use"><strong>Your move:</strong> Point it at your VCCS road trip photos, workshop screenshots, or Louis V shots. It writes the hook, body, and hashtags. You just approve and post.</div>
+      </div>
+
+      <div class="card orange">
+        <div class="card-label">STEP 3: PUBLISH</div>
+        <div class="card-command">Blotato Auto-Post</div>
+        <div class="card-desc">Claude generates captions from local images, then uploads directly to platforms using pre-signed upload URLs via Blotato.</div>
+        <div class="card-use"><strong>Your move:</strong> Batch process a week of TikTok/LinkedIn/Instagram posts from one folder of images + your brand voice skill. Schedule them all in one sitting.</div>
+      </div>
+
+      <div class="card orange">
+        <div class="card-label">STEP 4: AUTOMATE</div>
+        <div class="card-command">Content Calendar Loop</div>
+        <div class="card-desc">Claude schedules, reschedules, and manages your posting calendar on a recurring weekly loop.</div>
+        <div class="card-use"><strong>Your move:</strong> Set a Sunday night <code>/loop</code> that reviews your content queue, fills gaps, and pre-schedules the week. You review Monday morning.</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ============ VIDEO TAB ============ -->
+<div class="tab-panel" id="tab-video">
+
+  <div class="section">
+    <div class="section-title"><span class="dot" style="background:var(--pink)"></span> Setup (One-Time)</div>
+    <div class="workflow">
+      <h3>Install the Stack</h3>
+      <div class="wf-desc">Everything runs locally through Claude Code. No monthly video software subscriptions.</div>
+      <ol class="step-list">
+        <li>Install <code>Remotion</code> via Claude Code terminal (JavaScript-based video rendering library)</li>
+        <li>Install the <code>Claude Chrome Extension</code> (needed for pulling website assets for product launch videos)</li>
+        <li>Install <code>Blotato MCP</code> connector for auto-publishing to social platforms after render</li>
+        <li>Optionally install the <code>Python tool</code> in Cowork for script-based animated explainers</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="dot" style="background:var(--pink)"></span> Video Types You Can Generate</div>
+
+    <div class="workflow">
+      <h3>Type 1: Education Explainer</h3>
+      <div class="wf-desc">Animated motion graphics with text overlays. Perfect for course content.</div>
+      <ol class="step-list">
+        <li>Give Claude a topic or script prompt</li>
+        <li>Claude generates a <code>Remotion component</code> with motion graphics and animated text</li>
+        <li>Review the first render. Iterate via <code>storyboards</code> if needed</li>
+        <li>Export final video file locally</li>
+      </ol>
+      <div class="your-angle"><strong>Your angle:</strong> WCAG explainer videos for LearnAIID Academy on Payhip. "What is alt text and why it matters" as an animated 60-second clip. Sell the course, give the explainer away as marketing.</div>
+    </div>
+
+    <div class="workflow">
+      <h3>Type 2: Product Launch / Demo</h3>
+      <div class="wf-desc">Claude pulls assets from your website and builds a simulated product walkthrough.</div>
+      <ol class="step-list">
+        <li>Give Claude your product URL (e.g., learnaiid.com or a Payhip listing)</li>
+        <li>Chrome Extension pulls screenshots, logos, and copy directly from the site</li>
+        <li>Claude generates a simulated interactive demo video via Remotion</li>
+        <li>Render and export locally</li>
+      </ol>
+      <div class="your-angle"><strong>Your angle:</strong> Demo videos for each Payhip micro-course listing. "Here's what you get inside the Document Accessibility course" as a 30-second product walkthrough. Also works for pitching Classfindr to new institutions.</div>
+    </div>
+
+    <div class="workflow">
+      <h3>Type 3: Testimonial / Social Proof</h3>
+      <div class="wf-desc">Pulls Google reviews and animates them as social proof clips.</div>
+      <ol class="step-list">
+        <li>Point Claude at your Google Business listing (via Chrome Extension or local export)</li>
+        <li>Claude pulls review text automatically</li>
+        <li>Remotion renders them as animated social proof video clips</li>
+        <li>Export locally, sized for Instagram Reels or TikTok</li>
+      </ol>
+      <div class="your-angle"><strong>Your angle:</strong> When you start collecting LearnAIID or QM workshop feedback, turn the best quotes into animated testimonial reels. Instant credibility content.</div>
+    </div>
+
+    <div class="workflow">
+      <h3>Type 4: Edit Existing Video</h3>
+      <div class="wf-desc">Add captions, titles, and web screenshots to existing footage. No manual editing.</div>
+      <ol class="step-list">
+        <li>Provide Claude with an existing clip (talking-head, AI avatar, screen recording)</li>
+        <li>Claude auto-adds <code>dynamic captions</code>, titles, and web screenshot overlays via Remotion</li>
+        <li>Outputs a fully edited video file</li>
+      </ol>
+      <div class="your-angle"><strong>Your angle:</strong> Your VCCS road trip raw footage. Your QM workshop recordings. Add branded captions and LearnAIID lower thirds without opening Filmora.</div>
+    </div>
+
+    <div class="workflow">
+      <h3>Type 5: Data Visualization</h3>
+      <div class="wf-desc">Animated charts and infographics from any dataset or study.</div>
+      <ol class="step-list">
+        <li>Give Claude a link to a study, dataset, or spreadsheet</li>
+        <li>Claude reads the data and generates <code>animated charts and infographics</code> via Remotion</li>
+        <li>Export as video or GIF</li>
+      </ol>
+      <div class="your-angle"><strong>Your angle:</strong> VCCS compliance progress across 23 colleges as an animated bar chart. DOJ Title II deadline countdown with stats. Killer for LinkedIn and conference slides.</div>
+    </div>
+
+    <div class="workflow">
+      <h3>Auto-Publish (Works with All Types)</h3>
+      <div class="wf-desc">After rendering any video, post directly to social from Claude Code.</div>
+      <ol class="step-list">
+        <li>Blotato MCP is already connected from setup</li>
+        <li>After any render, Claude posts directly to Instagram, LinkedIn, TikTok, etc.</li>
+        <li>Manage full content calendar from within Claude Code</li>
+        <li>Set on a <code>/loop</code> for weekly automated content drops</li>
+      </ol>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============ MEMORY TAB ============ -->
+<div class="tab-panel" id="tab-memory">
+
+  <div class="section">
+    <div class="section-title"><span class="dot" style="background:var(--purple)"></span> Memory + Scope</div>
+    <div class="card-grid">
+
+      <div class="card purple">
+        <div class="card-label">CRITICAL FILE</div>
+        <div class="card-command">CLAUDE.md</div>
+        <div class="card-desc">A special file Claude reads at the start of every session. Your system prompt. Put your brand rules, preferences, and standing instructions here so you never repeat yourself.</div>
+        <div class="card-use"><strong>Your move:</strong> Include your no-em-dash rule, LearnAIID voice link, WCAG audit defaults, UDL framework reference, and role-switching instructions (VCCS vs QM vs Germanna vs Classfindr).</div>
+      </div>
+
+      <div class="card purple">
+        <div class="card-label">SCOPE</div>
+        <div class="card-command">Project Scope vs Global Scope</div>
+        <div class="card-desc">Skills and memories can be scoped to one project or apply globally across all sessions.</div>
+        <div class="card-use"><strong>Your move:</strong> Global: voice rules, em-dash hook, morning briefing. Project-scoped: VCCS audit checklist, QM workshop templates, Germanna course shells, Classfindr product context.</div>
+      </div>
+
+      <div class="card purple">
+        <div class="card-label">ORGANIZATION</div>
+        <div class="card-command">Claude Projects</div>
+        <div class="card-desc">Organize context per client/project. Each project gets its own Skills, scope, and conversation history.</div>
+        <div class="card-use"><strong>Your move:</strong> Separate projects for: VCCS/LearningMate, QM Workshops, LearnAIID Academy, Classfindr, Germanna Teaching. Each with its own CLAUDE.md and relevant skills.</div>
+      </div>
+
+      <div class="card purple">
+        <div class="card-label">REUSE</div>
+        <div class="card-command">Skill Creator (Meta-Skill)</div>
+        <div class="card-desc">A special skill that helps you build other skills. Interview-style: it asks what you need, then generates the skill file.</div>
+        <div class="card-use"><strong>Your move:</strong> You already have 5 custom skills. Use the Skill Creator to build your next ones: Email Briefing Skill, Social Content Generator Skill, Video Render Skill.</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  CLAUDE POWER WORKFLOWS // Page Durham // LearnAIID LLC // Built April 2026<br>
+  Assumes Claude Desktop, Cowork, and Claude Code are already installed.
+</div>
+
+<script>
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>
